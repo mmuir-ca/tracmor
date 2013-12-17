@@ -73,6 +73,15 @@
 			$objToReturn->strCode = $objDbRow->GetColumn($strAliasPrefix . 'code', 'VarChar');
 			$objToReturn->strQuantity = $objDbRow->GetColumn($strAliasPrefix . 'quantity', 'VarChar');
 			$objToReturn->strReceiptNumber = $objDbRow->GetColumn($strAliasPrefix . 'receipt_number', 'VarChar');
+			$objToReturn->strQuickNotes = $objDbRow->GetColumn($strAliasPrefix . 'quick_notes', 'VarChar');
+			$objToReturn->strDimensions = $objDbRow->GetColumn($strAliasPrefix . 'dimensions', 'VarChar');
+			$objToReturn->strWeight = $objDbRow->GetColumn($strAliasPrefix . 'weight', 'VarChar');
+			$objToReturn->strOwningCompany = $objDbRow->GetColumn($strAliasPrefix . 'owning_company', 'VarChar');
+			$objToReturn->strSerialNumber = $objDbRow->GetColumn($strAliasPrefix . 'serial_number', 'VarChar');
+			$objToReturn->strHScode = $objDbRow->GetColumn($strAliasPrefix . 'hs_code', 'VarChar');
+			$objToReturn->strCountryOrigin = $objDbRow->GetColumn($strAliasPrefix . 'country_origin', 'VarChar');
+			$objToReturn->strShippingValue = $objDbRow->GetColumn($strAliasPrefix . 'shipping_value', 'VarChar');
+			$objToReturn->strFCC = $objDbRow->GetColumn($strAliasPrefix . 'fcc', 'VarChar');
 			
 			return $objToReturn;
 		}
@@ -126,11 +135,21 @@
 						at.transaction_id = transaction.transaction_id
 					AND
 						at.parent_asset_transaction_id = asset_transaction.asset_transaction_id					
-					) AS receipt_number
+					) AS receipt_number,
+					asset_custom_field_helper.cfv_36 AS quick_notes,
+					asset_custom_field_helper.cfv_34 AS dimensions,
+					asset_custom_field_helper.cfv_27 AS weight,
+					asset_custom_field_helper.cfv_32 AS owning_company,
+					asset_custom_field_helper.cfv_1 AS serial_number,
+					asset_custom_field_helper.cfv_13 AS hs_code,
+					asset_custom_field_helper.cfv_14 AS country_origin,
+					asset_custom_field_helper.cfv_35 AS shipping_value,
+					asset_custom_field_helper.cfv_24 AS fcc
 				FROM 
 					asset_transaction 
 					LEFT JOIN asset ON asset_transaction.asset_id = asset.asset_id
 					LEFT JOIN asset_model ON asset.asset_model_id = asset_model.asset_model_id
+					LEFT JOIN asset_custom_field_helper ON asset_transaction.asset_id = asset_custom_field_helper.asset_id 
 				WHERE
 					asset_transaction.transaction_id = %s
 				UNION
@@ -138,11 +157,21 @@
 					inventory_model.short_description AS short_description, 
 					inventory_model.inventory_model_code AS code, 
 					inventory_transaction.quantity AS quantity,
-					'' AS receipt_number
+					'' AS receipt_number,
+					inventory_model_custom_field_helper.cfv_36 AS quick_notes,
+					inventory_model_custom_field_helper.cfv_34 AS dimensions,
+					inventory_model_custom_field_helper.cfv_27 AS weight,
+					inventory_model_custom_field_helper.cfv_32 AS owning_company,
+					'' AS serial_number,
+					inventory_model_custom_field_helper.cfv_13 AS hs_code,
+					inventory_model_custom_field_helper.cfv_14 AS country_origin,
+					inventory_model_custom_field_helper.cfv_35 AS shipping_value,
+					inventory_model_custom_field_helper.cfv_24 AS fcc
 				FROM 
 					inventory_transaction
 					LEFT JOIN inventory_location ON inventory_transaction.inventory_location_id = inventory_location.inventory_location_id
 					LEFT JOIN inventory_model ON inventory_location.inventory_model_id = inventory_model.inventory_model_id
+					LEFT JOIN inventory_model_custom_field_helper ON inventory_model.inventory_model_id= inventory_model_custom_field_helper.inventory_model_id
 				WHERE 
 					inventory_transaction.transaction_id = %s
 			", $objShipment->TransactionId, $objShipment->TransactionId);
@@ -170,20 +199,82 @@
 					 * @return string
 					 */
 					return $this->strCode;
-
+					
 				case 'Quantity':
 					/**
 					 * Gets the value for strCourierOther 
 					 * @return string
 					 */
 					return $this->strQuantity;
-
+					
 				case 'ReceiptNumber':
 					/**
 					 * Gets the value for strReceiptNumber 
 					 * @return string
 					 */
 					return $this->strReceiptNumber;	
+					
+				case 'QuickNotes':
+					/**
+					 * Gets the value for strQuickNotes 
+					 * @return string
+					 */
+					return $this->strQuickNotes;
+				case 'Dimensions':
+					/**
+					 * Gets the value for strDimensions 
+					 * @return string
+					 */
+					return $this->strDimensions;
+					
+				case 'Weight':
+					/**
+					 * Gets the value for strWeight 
+					 * @return string
+					 */
+					return $this->strWeight;
+					
+				case 'OwningCompany':
+					/**
+					 * Gets the value for strOwningCompany 
+					 * @return string
+					 */
+					return $this->strOwningCompany;
+					
+				case 'SerialNumber':
+					/**
+					 * Gets the value for strSerialNumber 
+					 * @return string
+					 */
+					return $this->strSerialNumber;
+					
+				case 'HScode':
+					/**
+					 * Gets the value for strHScode 
+					 * @return string
+					 */
+					return $this->strHScode;
+				case 'CountryOrigin':
+					/**
+					 * Gets the value for strCountryOrigin
+					 * @return string
+					 */
+					return $this->strCountryOrigin;
+					
+				case 'ShippingValue':
+					/**
+					 * Gets the value for strShippingValue  
+					 * @return string
+					 */
+					return $this->strShippingValue;
+					
+				case 'FCC':
+					/**
+					 * Gets the value for strFCC  
+					 * @return string
+					 */
+					return $this->strFCC;
+					
 				default:
 					try {
 						return parent::__get($strName);
@@ -247,6 +338,123 @@
 						throw $objExc;
 					}
 					
+				case 'QuickNotes':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strQuickNotes = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+							
+				case 'Dimensions':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strDimensions = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+						
+				case 'Weight':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strWeight = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+						
+				case 'OwningCompany':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strOwningCompany = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+									
+				case 'SerialNumber':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strSerialNumber = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+					
+				case 'HScode':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strHScode = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+						
+				case 'CountryOrigin':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strCountryOrigin = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+						
+				case 'ShippingValue':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strShippingValue = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+						
+				case 'FCC':
+					/**
+					 * Sets the value for strCourierOther 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strFCC = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+						
 				default:
 					try {
 						return parent::__set($strName, $mixValue);
@@ -264,5 +472,15 @@
 		protected $strCode;
 		protected $strQuantity;
 		protected $strReceiptNumber;
+		protected $strQuickNotes;
+		protected $strDimensions;
+		protected $strWeight;
+		protected $strOwningCompany;
+		protected $strSerialNumber;
+		protected $strHScode;
+		protected $strCountryOrigin;
+		protected $strShippingValue;
+		protected $strFCC;
+		
 	}
 ?>

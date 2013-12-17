@@ -1016,6 +1016,10 @@
 
 	    // Enable AJAX - this won't work while using the DB profiler
 	    $this->dtgAssetTransact->UseAjax = true;
+	    //MM//$this->dtgAssetTransact->UseAjax = false;
+
+  		// Allow for column toggling
+  		//MM//$this->dtgAssetTransact->ShowColumnToggle = true;
 
 	    // Enable Pagination, and set to 20 items per page
 	    $objPaginator = new QPaginator($this->dtgAssetTransact);

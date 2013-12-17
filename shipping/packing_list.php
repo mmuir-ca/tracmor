@@ -141,10 +141,23 @@
 			$this->dtgItem->CellPadding = 5;
 			$this->dtgItem->CellSpacing = 0;
 			$this->dtgItem->CssClass = "datagrid_print";
+			
+			// Allow for column toggling
+			//$this->dtgItem->ShowColumnToggle = true;
+  		
 
+		$this->dtgItem->AddColumn(new QDataGridColumn('Code', '<?= $_ITEM->Code ?>', 'Width=100', 'CssClass="dtg_column_print"', 'HtmlEntities=false'));
     	$this->dtgItem->AddColumn(new QDataGridColumn('Item', '<?= $_ITEM->ShortDescription ?>', 'CssClass="dtg_column_print"'));
-		$this->dtgItem->AddColumn(new QDataGridColumn('Code', '<?= $_ITEM->RenderBarcode() ?>', 'Width=200', 'CssClass="dtg_column_print"', 'HtmlEntities=false'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Qty', '<?= $_ITEM->Quantity ?>', 'Width=100','CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Qty', '<?= $_ITEM->Quantity ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Quick Notes', '<?= $_ITEM->QuickNotes ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Dimensions', '<?= $_ITEM->Dimensions ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Weight', '<?= $_ITEM->Weight ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Owning Company', '<?= $_ITEM->OwningCompany ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Serial Number', '<?= $_ITEM->SerialNumber ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('HS code', '<?= $_ITEM->HScode ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Country of Origin', '<?= $_ITEM->CountryOrigin ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('Shipping Value', '<?= $_ITEM->ShippingValue ?>', 'CssClass=dtg_column_print'));
+	    $this->dtgItem->AddColumn(new QDataGridColumn('FCC', '<?= $_ITEM->FCC ?>', 'CssClass=dtg_column_print'));
 	    $this->dtgItem->AddColumn(new QDataGridColumn('Receipt #', '<?= $_ITEM->ReceiptNumber ?>', 'CssClass=dtg_column_print'));
 	    
 	    $objStyle = $this->dtgItem->RowStyle;
