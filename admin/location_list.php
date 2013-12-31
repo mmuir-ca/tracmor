@@ -112,7 +112,7 @@
       // Enable Pagination, and set to 20 items per page
       $objPaginator = new QPaginator($this->dtgLocation);
       $this->dtgLocation->Paginator = $objPaginator;
-      $this->dtgLocation->ItemsPerPage = 20;
+      $this->dtgLocation->ItemsPerPage = 100;
       $this->dtgLocation->ShowExportCsv = true;
 	  
       $this->dtgLocation->AddColumn(new QDataGridColumnExt('ID', '<?= $_ITEM->LocationId ?>', array('OrderByClause' => QQ::OrderBy(QQN::Location()->LocationId), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Location()->LocationId, false)), 'CssClass="dtg_column"', 'HtmlEntities=false'));

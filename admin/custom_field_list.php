@@ -101,7 +101,7 @@
       // Enable Pagination, and set to 20 items per page
       $objPaginator = new QPaginator($this->dtgCustomField);
       $this->dtgCustomField->Paginator = $objPaginator;
-      $this->dtgCustomField->ItemsPerPage = 20;
+      $this->dtgCustomField->ItemsPerPage = 100;
           
       $this->dtgCustomField->AddColumn(new QDataGridColumn('Field Name', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::CustomField()->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::CustomField()->ShortDescription, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
       $this->dtgCustomField->AddColumn(new QDataGridColumn('Type', '<?= CustomFieldQtype::ToString($_ITEM->CustomFieldQtypeId) ?>', array('OrderByClause' => QQ::OrderBy(QQN::CustomField()->CustomFieldQtypeId), 'ReverseOrderByClause' => QQ::OrderBy(QQN::CustomField()->CustomFieldQtypeId, false), 'CssClass' => "dtg_column")));
