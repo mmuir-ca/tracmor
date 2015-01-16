@@ -76,6 +76,7 @@
 			$objToReturn->strQuickNotes = $objDbRow->GetColumn($strAliasPrefix . 'quick_notes', 'VarChar');
 			$objToReturn->strDimensions = $objDbRow->GetColumn($strAliasPrefix . 'dimensions', 'VarChar');
 			$objToReturn->strWeight = $objDbRow->GetColumn($strAliasPrefix . 'weight', 'VarChar');
+			$objToReturn->strPackingBox = $objDbRow->GetColumn($strAliasPrefix . 'packing_box', 'VarChar');
 			$objToReturn->strOwningCompany = $objDbRow->GetColumn($strAliasPrefix . 'owning_company', 'VarChar');
 			$objToReturn->strSerialNumber = $objDbRow->GetColumn($strAliasPrefix . 'serial_number', 'VarChar');
 			$objToReturn->strHScode = $objDbRow->GetColumn($strAliasPrefix . 'hs_code', 'VarChar');
@@ -139,6 +140,7 @@
 					asset_custom_field_helper.cfv_36 AS quick_notes,
 					asset_custom_field_helper.cfv_34 AS dimensions,
 					asset_custom_field_helper.cfv_27 AS weight,
+					asset_custom_field_helper.cfv_31 AS packing_box,
 					asset_custom_field_helper.cfv_32 AS owning_company,
 					asset_custom_field_helper.cfv_1 AS serial_number,
 					asset_custom_field_helper.cfv_13 AS hs_code,
@@ -161,6 +163,7 @@
 					inventory_model_custom_field_helper.cfv_36 AS quick_notes,
 					inventory_model_custom_field_helper.cfv_34 AS dimensions,
 					inventory_model_custom_field_helper.cfv_27 AS weight,
+					inventory_model_custom_field_helper.cfv_31 AS packing_box,
 					inventory_model_custom_field_helper.cfv_32 AS owning_company,
 					'' AS serial_number,
 					inventory_model_custom_field_helper.cfv_13 AS hs_code,
@@ -220,6 +223,7 @@
 					 * @return string
 					 */
 					return $this->strQuickNotes;
+					
 				case 'Dimensions':
 					/**
 					 * Gets the value for strDimensions 
@@ -233,6 +237,13 @@
 					 * @return string
 					 */
 					return $this->strWeight;
+					
+				case 'PackingBox':
+					/**
+					 * Gets the value for strPackingBox 
+					 * @return string
+					 */
+					return $this->strPackingBox;
 					
 				case 'OwningCompany':
 					/**
@@ -301,7 +312,7 @@
 				
 				case 'ShortDescription':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strShortDescription 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -314,7 +325,7 @@
 					
 				case 'Code':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strCode 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -327,7 +338,7 @@
 					
 				case 'Quantity':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strQuantity 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -340,7 +351,7 @@
 					
 				case 'QuickNotes':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strQuickNotes 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -353,7 +364,7 @@
 							
 				case 'Dimensions':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strDimensions 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -366,7 +377,7 @@
 						
 				case 'Weight':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strWeight 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -379,7 +390,7 @@
 						
 				case 'OwningCompany':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strOwningCompany 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -392,7 +403,7 @@
 									
 				case 'SerialNumber':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strSerialNumber 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -405,7 +416,7 @@
 					
 				case 'HScode':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strHScode 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -418,7 +429,7 @@
 						
 				case 'CountryOrigin':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strCountryOrigin 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -431,7 +442,7 @@
 						
 				case 'ShippingValue':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strShippingValue 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -444,7 +455,7 @@
 						
 				case 'FCC':
 					/**
-					 * Sets the value for strCourierOther 
+					 * Sets the value for strFCC 
 					 * @param string $mixValue
 					 * @return string
 					 */
@@ -475,6 +486,7 @@
 		protected $strQuickNotes;
 		protected $strDimensions;
 		protected $strWeight;
+		protected $strPackingBox;
 		protected $strOwningCompany;
 		protected $strSerialNumber;
 		protected $strHScode;

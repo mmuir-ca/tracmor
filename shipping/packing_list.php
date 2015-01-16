@@ -153,6 +153,7 @@
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Quick Notes', '<?= $_ITEM->QuickNotes ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Dimensions', '<?= $_ITEM->Dimensions ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Weight', '<?= $_ITEM->Weight ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Packing Box', '<?= $_ITEM->PackingBox ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Owning Company', '<?= $_ITEM->OwningCompany ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Serial Number', '<?= $_ITEM->SerialNumber ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('HS code', '<?= $_ITEM->HScode ?>', 'CssClass=dtg_column'));
