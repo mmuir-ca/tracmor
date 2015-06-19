@@ -202,6 +202,7 @@ TH, TD, BODY { font: 10px verdana; text-align: left; }
 	border:1px solid #CCCCCC;
 	border-top:none;
 }
+<<<<<<< HEAD
 
 .login_header {
 	position:relative;
@@ -221,3 +222,5 @@ TH, TD, BODY { font: 10px verdana; text-align: left; }
 	background-image:url(../images/tracmor.png);
 	background-size:155px 32px;
 }
+=======
+>>>>>>> Finish modification to customize the packing list

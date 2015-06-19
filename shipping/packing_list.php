@@ -140,25 +140,26 @@
 			$this->dtgItem = new QDataGrid($this);
 			$this->dtgItem->CellPadding = 5;
 			$this->dtgItem->CellSpacing = 0;
-			$this->dtgItem->CssClass = "datagrid_print";
-			
+			$this->dtgItem->CssClass = "datagrid";
+			$this->dtgItem->Name = 'packing_list';
+
 			// Allow for column toggling
-			//$this->dtgItem->ShowColumnToggle = true;
+	    $this->dtgItem->ShowColumnToggle = true;
   		
 
-		$this->dtgItem->AddColumn(new QDataGridColumn('Code', '<?= $_ITEM->Code ?>', 'Width=100', 'CssClass="dtg_column_print"', 'HtmlEntities=false'));
-    	$this->dtgItem->AddColumn(new QDataGridColumn('Item', '<?= $_ITEM->ShortDescription ?>', 'CssClass="dtg_column_print"'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Qty', '<?= $_ITEM->Quantity ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Quick Notes', '<?= $_ITEM->QuickNotes ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Dimensions', '<?= $_ITEM->Dimensions ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Weight', '<?= $_ITEM->Weight ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Owning Company', '<?= $_ITEM->OwningCompany ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Serial Number', '<?= $_ITEM->SerialNumber ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('HS code', '<?= $_ITEM->HScode ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Country of Origin', '<?= $_ITEM->CountryOrigin ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Shipping Value', '<?= $_ITEM->ShippingValue ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('FCC', '<?= $_ITEM->FCC ?>', 'CssClass=dtg_column_print'));
-	    $this->dtgItem->AddColumn(new QDataGridColumn('Receipt #', '<?= $_ITEM->ReceiptNumber ?>', 'CssClass=dtg_column_print'));
+		$this->dtgItem->AddColumn(new QDataGridColumnExt('Code', '<?= $_ITEM->Code ?>', 'Width=100', 'CssClass="dtg_column"', 'HtmlEntities=false'));
+    	$this->dtgItem->AddColumn(new QDataGridColumnExt('Item', '<?= $_ITEM->ShortDescription ?>', 'CssClass="dtg_column"'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Qty', '<?= $_ITEM->Quantity ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Quick Notes', '<?= $_ITEM->QuickNotes ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Dimensions', '<?= $_ITEM->Dimensions ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Weight', '<?= $_ITEM->Weight ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Owning Company', '<?= $_ITEM->OwningCompany ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Serial Number', '<?= $_ITEM->SerialNumber ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('HS code', '<?= $_ITEM->HScode ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Country of Origin', '<?= $_ITEM->CountryOrigin ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Shipping Value', '<?= $_ITEM->ShippingValue ?>', 'CssClass=dtg_column'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('FCC', '<?= $_ITEM->FCC ?>', 'CssClass=dtg_column', 'Display="false"'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Receipt #', '<?= $_ITEM->ReceiptNumber ?>', 'CssClass=dtg_column', 'Display="false"'));
 	    
 	    $objStyle = $this->dtgItem->RowStyle;
 	    $objStyle->ForeColor = '#000000';
