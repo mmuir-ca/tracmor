@@ -98,6 +98,7 @@
 			$this->ctlSearchMenu = new QInventorySearchComposite($this, null, QApplication::AuthorizeEntityTypeBoolean(2));
 		}
 
+
 		// Mass Actions controls creating/handling functions
 		protected function dlgMassDelete_Create() {
 			$this->dlgMassDelete = new QDialogBox($this);
