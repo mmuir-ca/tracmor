@@ -105,7 +105,7 @@
       // Enable Pagination, and set to 20 items per page
       $objPaginator = new QPaginator($this->dtgUserAccount);
       $this->dtgUserAccount->Paginator = $objPaginator;
-      $this->dtgUserAccount->ItemsPerPage = 20;
+      $this->dtgUserAccount->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
           
       $this->dtgUserAccount->AddColumn(new QDataGridColumn('Username', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::UserAccount()->Username), 'ReverseOrderByClause' => QQ::OrderBy(QQN::UserAccount()->Username, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
       $this->dtgUserAccount->AddColumn(new QDataGridColumn('Name', '<?= $_ITEM->FirstName ?> <?= $_ITEM->LastName ?>', array('OrderByClause' => QQ::OrderBy(QQN::UserAccount()->LastName, false, QQN::UserAccount()->FirstName, false), 'ReverseOrderByClause' => QQ::OrderBy(QQN::UserAccount()->LastName, QQN::UserAccount()->FirstName), 'CssClass' => "dtg_column")));
