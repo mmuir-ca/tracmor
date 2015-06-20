@@ -368,7 +368,9 @@ class QAssetEditComposite extends QControl {
 		$this->lstLocation = new QListBox($this);
 		$this->lstLocation->Name = 'Location';
 		$this->lstLocation->Required = true;
-		$this->lstLocation->AddItem('- Select One -', null);
+    	$intDefaultLocationId = 95; // set this to the id of the default location
+       	$this->lstLocation->AddItem('Shop Floor/Staging', $intDefaultLocationId);
+		//$this->lstLocation->AddItem('- Select One -', null);
 		$objLocationArray = Location::LoadAllLocations(true,false,'short_description',null,null,false,false,true,false);
 		if ($objLocationArray) foreach ($objLocationArray as $objLocation) {
 			$objListItem = new QListItem($objLocation->__toString(), $objLocation->LocationId);

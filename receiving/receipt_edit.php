@@ -1018,7 +1018,10 @@
 					$lstLocationAssetReceived = new QListBox($this->dtgAssetTransact, $strControlId);
 					$lstLocationAssetReceived->Name = 'Location To Receive';
 					$lstLocationAssetReceived->ActionParameter = $objAssetTransaction->AssetTransactionId;
-					$lstLocationAssetReceived->AddItem('- Select One -', null);
+					
+    				$intDefaultLocationId = 95; // set this to the id of the default location
+       				$lstLocationAssetReceived->AddItem('Shop Floor/Staging', $intDefaultLocationId);
+					//$lstLocationAssetReceived->AddItem('- Select One -', null);
 					$objLocationArray = Location::LoadAllLocations(false, false, 'short_description',null,null,false,false,true,false);
 					if ($objLocationArray) {
 						// Get assets last location if the admin setting is enabled, otherwise set to null
@@ -1187,7 +1190,9 @@
 					$lstLocationInventoryReceived = new QListBox($this->dtgInventoryTransact, $strControlId);
 					$lstLocationInventoryReceived->Name = 'Location To Receive';
 					$lstLocationInventoryReceived->ActionParameter = $objInventoryTransaction->InventoryTransactionId;
-					$lstLocationInventoryReceived->AddItem('- Select One -', null);
+    				$intDefaultLocationId = 95; // set this to the id of the default location
+       				$lstLocationInventoryReceived->AddItem('Shop Floor/Staging', $intDefaultLocationId);
+					//$lstLocationInventoryReceived->AddItem('- Select One -', null);
 					$objLocationArray = Location::LoadAllLocations(false, false, 'short_description',null,null,false,false,false,true);
 					if ($objLocationArray) {
 						foreach ($objLocationArray as $objLocation) {
