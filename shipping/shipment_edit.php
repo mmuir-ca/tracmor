@@ -1022,8 +1022,8 @@
 	    $this->dtgAssetTransact->Paginator = $objPaginator;
 	    $this->dtgAssetTransact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
 
-    	$this->dtgAssetTransact->AddColumn(new QDataGridColumn('Asset Tag', '<?= $_ITEM->Asset->__toStringWithLink("bluelink") ?> <?= $_ITEM->ToStringHovertips($_CONTROL) ?>', array('CssClass' => "dtg_column", 'HtmlEntities' => false)));
-	    $this->dtgAssetTransact->AddColumn(new QDataGridColumn('Model', '<?= $_ITEM->Asset->AssetModel->__toStringWithLink("bluelink") ?>', array('Width' => "200", 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
+    	$this->dtgAssetTransact->AddColumn(new QDataGridColumn('Asset Tag', '<?= $_ITEM->Asset->__toStringWithLink("bluelink") ?> <?= $_ITEM->ToStringHovertips($_CONTROL) ?>', array('OrderByClause' => QQ::OrderBy(QQN::AssetTransaction()->Asset->AssetCode), 'ReverseOrderByClause' => QQ::OrderBy(QQN::AssetTransaction()->Asset->AssetCode, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
+	    $this->dtgAssetTransact->AddColumn(new QDataGridColumn('Model', '<?= $_ITEM->Asset->AssetModel->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::AssetTransaction()->Asset->AssetModel->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::AssetTransaction()->Asset->AssetModel->ShortDescription, false), 'Width' => "200", 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
 	    $this->dtgAssetTransact->AddColumn(new QDataGridColumn('Location', '<?= $_ITEM->SourceLocation->__toString() ?>', array('CssClass' => "dtg_column")));
 
 	    if (!$this->blnEditMode) {
@@ -1160,8 +1160,8 @@
 	    $this->dtgInventoryTransact->Paginator = $objPaginator;
 	    $this->dtgInventoryTransact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
 
-	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Code', '<?= $_ITEM->InventoryLocation->InventoryModel->__toStringWithLink("bluelink") ?>', array('CssClass' => "dtg_column", 'HtmlEntities' => false)));
-	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Model', '<?= $_ITEM->InventoryLocation->InventoryModel->ShortDescription ?>', array('Width' => "200", 'CssClass' => "dtg_column")));
+	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Code', '<?= $_ITEM->InventoryLocation->InventoryModel->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->InventoryModelCode), 'ReverseOrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->InventoryModelCode, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
+	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Model', '<?= $_ITEM->InventoryLocation->InventoryModel->ShortDescription ?>', array('OrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->ShortDescription, false), 'Width' => "200", 'CssClass' => "dtg_column")));
 	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Source Location', '<?= $_ITEM->SourceLocation->__toString() ?>', array('CssClass' => "dtg_column")));
 	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Quantity', '<?= $_ITEM->Quantity ?>', array('CssClass' => "dtg_column")));
 	    if (!$this->blnEditMode) {

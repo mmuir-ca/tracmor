@@ -1063,8 +1063,8 @@
 	    $this->dtgInventoryTransact->Paginator = $objPaginator;
 	    $this->dtgInventoryTransact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
 
-	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Code', '<?= $_ITEM->InventoryLocation->InventoryModel->__toStringWithLink("bluelink") ?>', array('CssClass' => "dtg_column", 'HtmlEntities' => false)));
-	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Model', '<?= $_ITEM->InventoryLocation->InventoryModel->ShortDescription ?>', array('Width' => "200", 'CssClass' => "dtg_column")));
+	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Code', '<?= $_ITEM->InventoryLocation->InventoryModel->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->InventoryModelCode), 'ReverseOrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->InventoryModelCode, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
+	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Inventory Model', '<?= $_ITEM->InventoryLocation->InventoryModel->ShortDescription ?>', array('OrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::InventoryTransaction()->InventoryLocation->InventoryModel->ShortDescription, false),'Width' => "200", 'CssClass' => "dtg_column")));
 	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Quantity', '<?= $_ITEM->Quantity ?>', array('CssClass' => "dtg_column")));
 	    $this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Status', '<?= $_ITEM->__toStringStatus() ?>', array('CssClass' => "dtg_column", 'HtmlEntities' => false)));
 
