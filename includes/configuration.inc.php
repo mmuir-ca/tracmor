@@ -16,7 +16,7 @@
 		case 'test':
 		case 'stage':
 		case 'prod':
-			define ('__DOCROOT__', '/var/www/tracmor');
+			define ('__DOCROOT__', '/var/www/html/tracmor');
 			define ('__VIRTUAL_DIRECTORY__', '');
 			define ('__SUBDIRECTORY__', '');
 
