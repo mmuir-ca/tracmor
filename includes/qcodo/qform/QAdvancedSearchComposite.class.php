@@ -287,7 +287,7 @@ class QAdvancedSearchComposite extends QControl {
 
 		$this->chkIncludeShipped = new QCheckBox($this);
 		$this->chkIncludeShipped->Name = 'Include Shipped';
-		$this->chkIncludeSHipped->Checked = true;
+		$this->chkIncludeShipped->Checked = true;
 		$this->chkIncludeShipped->AddAction(new QEnterKeyEvent(), new QServerControlAction($this->objParentObject, 'btnSearch_Click'));
 		$this->chkIncludeShipped->AddAction(new QEnterKeyEvent(), new QTerminateAction());
 	}

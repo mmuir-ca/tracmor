@@ -71,6 +71,8 @@
 
 			$objToReturn->strShortDescription = $objDbRow->GetColumn($strAliasPrefix . 'short_description', 'VarChar');
 			$objToReturn->strCode = $objDbRow->GetColumn($strAliasPrefix . 'code', 'VarChar');
+			$objToReturn->strParentAsset = $objDbRow->GetColumn($strAliasPrefix . 'parent_asset', 'VarChar');
+			$objToReturn->strParentCode = $objDbRow->GetColumn($strAliasPrefix . 'parent_code', 'VarChar');
 			$objToReturn->strQuantity = $objDbRow->GetColumn($strAliasPrefix . 'quantity', 'VarChar');
 			$objToReturn->strReceiptNumber = $objDbRow->GetColumn($strAliasPrefix . 'receipt_number', 'VarChar');
 			$objToReturn->strQuickNotes = $objDbRow->GetColumn($strAliasPrefix . 'quick_notes', 'VarChar');
@@ -122,6 +124,13 @@
 				SELECT 
 					asset_model.short_description AS short_description,
 					asset.asset_code AS code,
+					asset.parent_asset_id AS parent_asset,
+					(SELECT
+						asset.asset_code 
+					FROM
+						asset 
+					WHERE
+						asset.asset_id = parent_asset) AS parent_code,
 					'1' AS quantity,
 					(
 					SELECT 
@@ -158,6 +167,13 @@
 				SELECT 
 					inventory_model.short_description AS short_description, 
 					inventory_model.inventory_model_code AS code, 
+					inventory_transaction.source_location_id AS parent_asset,
+					(SELECT
+						short_description
+					FROM
+						location
+					WHERE
+						location_id = parent_asset) AS parent_code,
 					inventory_transaction.quantity AS quantity,
 					'' AS receipt_number,
 					inventory_model_custom_field_helper.cfv_36 AS quick_notes,
@@ -203,6 +219,12 @@
 					 */
 					return $this->strCode;
 					
+				case 'ParentAsset':
+					return $this->strParentAsset;
+					
+				case 'ParentCode':
+					return $this->strParentCode;
+				
 				case 'Quantity':
 					/**
 					 * Gets the value for strCourierOther 
@@ -336,6 +358,22 @@
 						throw $objExc;
 					}
 					
+				case 'ParentAsset':					
+					try {
+						return ($this->strParentAsset = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+					
+				case 'ParentCode':
+					try {
+						return ($this->strParentCode = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+				
 				case 'Quantity':
 					/**
 					 * Sets the value for strQuantity 
@@ -481,6 +519,8 @@
 		///////////////////////////////
 		protected $strShortDescription;
 		protected $strCode;
+		protected $strParentAsset;
+		protected $strParentCode;
 		protected $strQuantity;
 		protected $strReceiptNumber;
 		protected $strQuickNotes;

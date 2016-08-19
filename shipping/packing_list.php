@@ -106,7 +106,7 @@
 			}
 		}
 
-		// Create and Setp lblToAddress
+		// Create and Setup lblToAddress
 		protected function lblToAddress_Create() {
 			$this->lblToAddress = new QLabel($this);
 			$this->lblToAddress->HtmlEntities=false;
@@ -149,6 +149,7 @@
 
 		$this->dtgItem->AddColumn(new QDataGridColumnExt('Code', '<?= $_ITEM->Code ?>', 'Width=100', 'CssClass="dtg_column"', 'HtmlEntities=false'));
     	$this->dtgItem->AddColumn(new QDataGridColumnExt('Item', '<?= $_ITEM->ShortDescription ?>', 'CssClass="dtg_column"'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Parent', '<?= $_ITEM->ParentCode ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Qty', '<?= $_ITEM->Quantity ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Quick Notes', '<?= $_ITEM->QuickNotes ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Dimensions', '<?= $_ITEM->Dimensions ?>', 'CssClass=dtg_column'));
