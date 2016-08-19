@@ -474,8 +474,8 @@ class QAssetSearchComposite extends QControl {
 	  	$this->strDateModifiedLast = null;
 	  	$this->blnAttachment = false;
 	  	$this->blnArchived = false;
-	  	$this->blnIncludeTBR = false;
-	  	$this->blnIncludeShipped = false;
+	  	$this->blnIncludeTBR = true;
+	  	$this->blnIncludeShipped = true;
 	  	$this->blnCheckedOutPastDue = false;
   		if ($this->arrCustomFields) {
 	  		foreach ($this->arrCustomFields as $field) {

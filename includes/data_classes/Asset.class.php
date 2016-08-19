@@ -655,7 +655,7 @@
      * @param array $objExpansionMap
      * @return integer Count
      */
-		public static function CountBySearchHelper($strAssetCode = null, $intLocationId = null, $intAssetModelId = null, $intCategoryId = null, $intManufacturerId = null, $blnOffsite = false, $strAssetModelCode = null, $intReservedBy = null, $intCheckedOutBy = null, $strShortDescription = null, $arrCustomFields = null, $strDateModified = null, $strModifiedCreated = null, $strDateModifiedFirst = null, $strDateModifiedLast = null, $blnAttachment = null, $objExpansionMap = null, $blnIncludeTBR = false, $blnIncludeShipped = false, $blnArchived = false, $intCheckedOutToUser = null, $intCheckedOutToContact = null, $blnChekcedOutPastDue = false) {
+		public static function CountBySearchHelper($strAssetCode = null, $intLocationId = null, $intAssetModelId = null, $intCategoryId = null, $intManufacturerId = null, $blnOffsite = false, $strAssetModelCode = null, $intReservedBy = null, $intCheckedOutBy = null, $strShortDescription = null, $arrCustomFields = null, $strDateModified = null, $strModifiedCreated = null, $strDateModifiedFirst = null, $strDateModifiedLast = null, $blnAttachment = null, $objExpansionMap = null, $blnIncludeTBR = true, $blnIncludeShipped = true, $blnArchived = false, $intCheckedOutToUser = null, $intCheckedOutToContact = null, $blnChekcedOutPastDue = false) {
 
 			// Call to QueryHelper to Get the Database Object
 			Asset::QueryHelper($objDatabase);
@@ -839,7 +839,7 @@
      * @param array $objExpansionMap map of referenced columns to be immediately expanded via early-binding
      * @return Asset[]
      */
-		public static function LoadArrayBySearchHelper($strAssetCode = null, $intLocationId = null, $intAssetModelId = null, $intCategoryId = null, $intManufacturerId = null, $blnOffsite = false, $strAssetModelCode = null, $intReservedBy = null, $intCheckedOutBy = null, $strShortDescription = null, $arrCustomFields = null, $strDateModified = null, $strModifiedCreated, $strDateModifiedFirst = null, $strDateModifiedLast = null, $blnAttachment = null, $strOrderBy = null, $strLimit = null, $objExpansionMap = null, $blnIncludeTBR = false, $blnIncludeShipped = false, $blnArchived = false, $intCheckedOutToUser = null, $intCheckedOutToContact = null, $blnChekcedOutPastDue = false, $intAssetId = null) {
+		public static function LoadArrayBySearchHelper($strAssetCode = null, $intLocationId = null, $intAssetModelId = null, $intCategoryId = null, $intManufacturerId = null, $blnOffsite = false, $strAssetModelCode = null, $intReservedBy = null, $intCheckedOutBy = null, $strShortDescription = null, $arrCustomFields = null, $strDateModified = null, $strModifiedCreated, $strDateModifiedFirst = null, $strDateModifiedLast = null, $blnAttachment = null, $strOrderBy = null, $strLimit = null, $objExpansionMap = null, $blnIncludeTBR = true, $blnIncludeShipped = true, $blnArchived = false, $intCheckedOutToUser = null, $intCheckedOutToContact = null, $blnChekcedOutPastDue = false, $intAssetId = null) {
 
 			Asset::ArrayQueryHelper($strOrderBy, $strLimit, $strLimitPrefix, $strLimitSuffix, $strExpandSelect, $strExpandFrom, $objExpansionMap, $objDatabase);
 
