@@ -983,13 +983,14 @@
 
 		// Render the cancel receipt button in the AssetTransact datagrid
 		// We are not using this button at all anymore
-/*		public function btnCancelAssetTransaction_Render(AssetTransaction $objAssetTransaction) {
+		// MM - Turning this function back on
+		public function btnCancelAssetTransaction_Render(AssetTransaction $objAssetTransaction) {
 
 			if ($objAssetTransaction->blnReturnReceivedStatus()) {
 				$strControlId = 'btnCancelAssetTransaction' . $objAssetTransaction->AssetTransactionId;
 				$btnCancelAsset = $this->GetControl($strControlId);
 				if (!$btnCancelAsset) {
-					// Create the Cancel button for this rown in the datagrid
+					// Create the Cancel button for this row in the datagrid
 					// Use ActionParameter to specify the ID of the AssetTransaction
 					$btnCancelAsset = new QButton($this->dtgAssetTransact, $strControlId);
 					$btnCancelAsset->Text = 'Cancel';
@@ -1004,7 +1005,7 @@
 
 				return $btnCancelAsset->Render(false);
 			}
-		}*/
+		}
 
 		// Render the location received list in the AssetTransact datagrid
 		public function lstLocationAssetReceived_Render(AssetTransaction $objAssetTransaction) {
@@ -1135,7 +1136,8 @@
 		}
 
 		// Render the cancel button in the InventoryTransact datagrid
-/*		public function btnCancelInventoryTransaction_Render(InventoryTransaction $objInventoryTransaction) {
+		// MM - Turning this function back on
+		public function btnCancelInventoryTransaction_Render(InventoryTransaction $objInventoryTransaction) {
 
 			if ($objInventoryTransaction->blnReturnReceivedStatus()) {
 				$strControlId = 'btnCancelInventoryTransaction' . $objInventoryTransaction->InventoryTransactionId;
@@ -1155,7 +1157,7 @@
 				QApplication::AuthorizeControl($this->objReceipt, $btnCancelInventory, 2);
 				return $btnCancelInventory->Render(false);
 			}
-		}*/
+		}
 
 		// Render the quantity textbox in the InventoryTransact datagrid
 		public function txtQuantityReceived_Render(InventoryTransaction $objInventoryTransaction) {
@@ -1692,7 +1694,8 @@
 		// Cancel Asset Click
 		// We are not using this method anymore.
 		// We cannot allow people to reverse transactions, because other users could have conducted a transaction on this asset after it was received
-/*		public function btnCancelAssetTransaction_Click($strFormId, $strControlId, $strParameter) {
+		// MM - Turning this function back on
+		public function btnCancelAssetTransaction_Click($strFormId, $strControlId, $strParameter) {
 
 			$intAssetTransactionId = $strParameter;
 			if ($this->objAssetTransactionArray) {
@@ -1729,6 +1732,7 @@
 					}
 					// Commit all of the transactions to the database
 					$objDatabase->TransactionCommit();
+					$this->dtgAssetTransact->Refresh();
 				}
 				catch (QExtendedOptimisticLockingException $objExc) {
 
@@ -1743,7 +1747,7 @@
 					}
 				}
 			}
-		}*/
+		}
 
 		// Receive asset click
 		public function btnReceiveAssetTransaction_Click($strFormId, $strControlId, $strParameter) {
@@ -1771,7 +1775,7 @@
 					    $objLinkedAssetTransactionArray[$objAssetTransaction->Asset->AssetCode] = $objAssetTransaction;
 					  }
 					}
-			    foreach ($objAssetTransactionArray as &$objAssetTransaction) {
+			    	foreach ($objAssetTransactionArray as &$objAssetTransaction) {
 						if ($objAssetTransaction->AssetTransactionId == $intAssetTransactionId) {
 							// Get the value of the location where this Asset is being received to
 							$lstLocationAssetReceived = $this->GetControl('lstLocationAssetReceived' . $objAssetTransaction->AssetTransactionId);
@@ -1789,16 +1793,17 @@
   								// Move the asset to the new location
   								$objAssetTransaction->Asset->LocationId = $lstLocationAssetReceived->SelectedValue;
   								$objAssetTransaction->Asset->Save();
-                  if ($objLinkedAssetArray = Asset::LoadChildLinkedArrayByParentAssetId($objAssetTransaction->Asset->AssetId))
+                  				if ($objLinkedAssetArray = Asset::LoadChildLinkedArrayByParentAssetId($objAssetTransaction->Asset->AssetId))
     								foreach ($objLinkedAssetArray as $objLinkedAsset) {
-          						$objLinkedAssetTransaction = $objLinkedAssetTransactionArray[$objLinkedAsset->AssetCode];
-          					  $objLinkedAssetTransaction->DestinationLocationId = $lstLocationAssetReceived->SelectedValue;
-          						$objLinkedAssetTransaction->Save();
-          						$objLinkedAssetTransaction->Asset->LocationId = $lstLocationAssetReceived->SelectedValue;
-          						$objLinkedAssetTransaction->Asset->Save();
-          					}
-        				  $objAssetTransaction->Asset = Asset::Load($objAssetTransaction->AssetId);
-							  }
+          								$objLinkedAssetTransaction = $objLinkedAssetTransactionArray[$objLinkedAsset->AssetCode];
+          					  			$objLinkedAssetTransaction->DestinationLocationId = $lstLocationAssetReceived->SelectedValue;
+          								$objLinkedAssetTransaction->Save();
+          								$objLinkedAssetTransaction->Asset->LocationId = $lstLocationAssetReceived->SelectedValue;
+          						
+          								$objLinkedAssetTransaction->Asset->Save();
+          						}
+        				  		$objAssetTransaction->Asset = Asset::Load($objAssetTransaction->AssetId);
+							  	}
 							}
 							else {
 								$blnError = true;
@@ -1834,7 +1839,11 @@
 					}
 
 					// Commit all of the transactions to the database
-					$objDatabase->TransactionCommit();
+					
+					$objDatabase->TransactionCommit();				
+					$this->objAssetTransactionArray = AssetTransaction::LoadArrayByTransactionId($this->objReceipt->TransactionId);
+
+                    $this->dtgInventoryTransact->Refresh(true);
 				}
 				catch (QExtendedOptimisticLockingException $objExc) {
 
@@ -1859,7 +1868,8 @@
 		}
 
 		// Cancel Inventory Click
-/*		public function btnCancelInventoryTransaction_Click($strFormId, $strControlId, $strParameter) {
+		// MM - Turning this function back on
+		public function btnCancelInventoryTransaction_Click($strFormId, $strControlId, $strParameter) {
 
 			$intInventoryTransactionId = $strParameter;
 			if ($this->objInventoryTransactionArray) {
@@ -1901,6 +1911,7 @@
 
 					// Commit all of the transactions to the database
 					$objDatabase->TransactionCommit();
+                    $this->dtgInventoryTransact->Refresh();
 				}
 				catch (QExtendedOptimisticLockingException $objExc) {
 
@@ -1915,7 +1926,7 @@
 					}
 				}
 			}
-		}*/
+		}
 
 		// Receive Inventory Click - Holy Shit
 	        public function btnReceiveInventoryTransaction_Click($strFormId, $strControlId, $strParameter) {
@@ -2613,6 +2624,8 @@
 			if ($this->blnEditMode) {
 				$this->dtgAssetTransact->AddColumn(new QDataGridColumn('&nbsp;', '<?= $_FORM->lstLocationAssetReceived_Render($_ITEM) ?> <?= $_FORM->btnReceiveAssetTransaction_Render($_ITEM) ?>', array('CssClass' => "dtgcolumn", 'HtmlEntities' => false)));
 				$this->dtgInventoryTransact->AddColumn(new QDataGridColumn('&nbsp;', '<?= $_FORM->lstLocationInventoryReceived_Render($_ITEM) ?> <?= $_FORM->txtQuantityReceived_Render($_ITEM) ?> <?= $_FORM->btnReceiveInventoryTransaction_Render($_ITEM) ?>', array('CssClass' => "dtgcolumn", 'HtmlEntities' => false)));
+				$this->dtgAssetTransact->AddColumn(new QDataGridColumn('Cancel', '<?= $_FORM->btnCancelAssetTransaction_Render($_ITEM) ?>', array('CssClass' => "dtgcolumn", 'HtmlEntities' => false)));
+				$this->dtgInventoryTransact->AddColumn(new QDataGridColumn('Cancel', '<?= $_FORM->btnCancelInventoryTransaction_Render($_ITEM) ?>', array('CssClass' => "dtgcolumn", 'HtmlEntities' => false)));
 			}
 			$this->lblNewFromCompany->Display = false;
 			$this->lblNewFromContact->Display = false;
@@ -2642,7 +2655,9 @@
 			$this->atcAttach->btnUpload->Display = false;
 			if ($this->blnEditMode) {
 				$this->dtgAssetTransact->RemoveColumnByName('&nbsp;');
+				$this->dtgAssetTransact->RemoveColumnByName('Cancel');
 				$this->dtgInventoryTransact->RemoveColumnByName('&nbsp;');
+				$this->dtgInventoryTransact->RemoveColumnByName('Cancel');
 			}
 
 			// Display inputs
