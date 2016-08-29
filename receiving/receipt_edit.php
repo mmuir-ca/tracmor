@@ -1793,6 +1793,8 @@
   								// Move the asset to the new location
   								$objAssetTransaction->Asset->LocationId = $lstLocationAssetReceived->SelectedValue;
   								$objAssetTransaction->Asset->Save();
+  								$strQuery = sprintf("UPDATE  `asset_custom_field_helper` SET  `cfv_11` =  'No' WHERE  `asset_id` = %s", $objAssetTransaction->Asset->AssetId);
+                  				$objDatabase->NonQuery($strQuery);
                   				if ($objLinkedAssetArray = Asset::LoadChildLinkedArrayByParentAssetId($objAssetTransaction->Asset->AssetId))
     								foreach ($objLinkedAssetArray as $objLinkedAsset) {
           								$objLinkedAssetTransaction = $objLinkedAssetTransactionArray[$objLinkedAsset->AssetCode];
