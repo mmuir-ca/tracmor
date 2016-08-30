@@ -2327,7 +2327,9 @@
 						$objInternalReceipt->ToContactId = $this->objShipment->ToContactId;
 						$objInternalReceipt->ToAddressId = $this->objShipment->ToAddressId;
 						$objInternalReceipt->ReceivedFlag = 0;
-						$objInternalReceipt->ReceiptNumber = Receipt::LoadNewReceiptNumber();
+						// Change ReceiptNumber to be the Shipment number with -Rc appended to it;
+						$objInternalReceipt->ReceiptNumber = $this->objShipment->ShipmentNumber.'-Rc';
+						//$objInternalReceipt->ReceiptNumber = Receipt::LoadNewReceiptNumber();
 						$objInternalReceipt->Save();
 					}
 
