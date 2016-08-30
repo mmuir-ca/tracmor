@@ -3147,13 +3147,16 @@
 					$this->objTransaction = Transaction::Load($this->objShipment->TransactionId);
 				}
 				$this->objShipment->Transaction = $this->objTransaction;
-				$this->objShipment->ShipmentNumber = $this->lblShipmentNumber->Text;
+				$this->objShipment->ShipmentNumber = $this->txtShipmentNumber->Text;
+				error_log("edit mode");
 			}
 			elseif (QApplication::$TracmorSettings->CustomShipmentNumbers) {
 				$this->objShipment->ShipmentNumber = $this->txtShipmentNumber->Text;
+				error_log("custom mode");
 			}
 			else {
 				$this->objShipment->ShipmentNumber = Shipment::LoadNewShipmentNumber();
+				error_log("new ship number mode");
 			}
 			$this->objShipment->ToContactId = $this->lstToContact->SelectedValue;
 			$this->objShipment->FromCompanyId = $this->lstFromCompany->SelectedValue;
