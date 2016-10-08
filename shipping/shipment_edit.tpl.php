@@ -183,6 +183,7 @@ $this->pnlAttachments->Render();
 <div class="title">Assets to Ship</div>
 <table>
 	<tr>
+		<td valign="top" width="125px"><?php $this->lstBox->RenderWithError(); ?></td>
 		<td valign="top" width="200px"><?php $this->txtNewAssetCode->RenderDesigned(); ?></td>
 		<td valign="top" width="20px"><?php $this->lblAddAsset->Render(); ?></td>
 		<td valign="top"><?php $this->btnAddAsset->Render(); //$this->lblAdvanced->Render(); ?></td>
