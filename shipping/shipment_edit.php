@@ -794,9 +794,7 @@ elseif ($intDayOfWeek == 6) {
 		$this->lstBox = new QListBox ( $this );
 		$this->lstBox->Name = "Add to Box";
 		$this->lstBox->Required = true;
-		if (! $this->blnEditMode) {
-			$this->lstBox->AddItem ( '- Select One -', null );
-		}
+		$this->lstBox->AddItem ( '- Select One -', null );
 		$lstBoxArray = CustomFieldValue::LoadArrayByCustomFieldId ( 31, QQ::Clause ( QQ::OrderBy ( QQN::CustomFieldValue ()->ShortDescription ) ) );
 		
 		if ($lstBoxArray)
