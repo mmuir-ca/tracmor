@@ -113,6 +113,7 @@ class ShipmentEditForm extends ShipmentEditFormBase {
 	protected $lblCourier;
 	protected $pnlNote;
 	protected $lblPackingListLink;
+	protected $lblCommercialInvoiceLink;
 	protected $lblNewFromCompany;
 	protected $lblNewFromContact;
 	protected $lblNewFromAddress;
@@ -172,6 +173,7 @@ class ShipmentEditForm extends ShipmentEditFormBase {
 		
 		// Packing List Link
 		$this->lblPackingListLink_Create ();
+		$this->lblCommercialInvoiceLink_Create();
 		
 		// Shipping Labels
 		$this->lblShipmentNumber_Create ();
@@ -304,7 +306,7 @@ class ShipmentEditForm extends ShipmentEditFormBase {
 			// If shipped, display labels. Otherwise, we don't need to call DisplayLabels because only labels are on the QPanel.
 			$this->DisplayLabels ();
 		} // For a new shipment, display the inputs
-elseif (! $this->blnEditMode) {
+		elseif (! $this->blnEditMode) {
 			$this->DisplayInputs ();
 		}
 		
@@ -461,6 +463,14 @@ elseif (! $this->blnEditMode) {
 		$this->lblPackingListLink->HtmlEntities = false;
 		if ($this->blnEditMode) {
 			$this->lblPackingListLink->Text = $this->objShipment->__toStringPackingListLink ( "bluelink" );
+		}
+	}
+	
+	protected function  lblCommercialInvoiceLink_Create() {
+		$this->lblCommercialInvoiceLink = new QLabel ( $this );
+		$this->lblCommercialInvoiceLink->HtmlEntities = false;
+		if ($this->blnEditMode) {
+			$this->lblCommercialInvoiceLink->Text = $this->objShipment->__toStringCommercialInvoiceLink ( "bluelink" );
 		}
 	}
 	

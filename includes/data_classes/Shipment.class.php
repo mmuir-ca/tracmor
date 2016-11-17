@@ -179,7 +179,11 @@
 		public function __toStringPackingListLink($CssClass = null) {
 			return sprintf('<a href="packing_list.php?intShipmentId=%s" target="_blank" class="%s">Packing List</a>', $this->ShipmentId, $CssClass);
 		}
-
+		
+		public function __toStringCommercialInvoiceLink($CssClass = null) {
+			return sprintf('<a href="commercial_invoice.php?intShipmentId=%s" target="_blank" class="%s">Commercial Invoice</a>', $this->ShipmentId, $CssClass);
+		}
+		
 		public function __toStringFedexShippingLabelLink($CssClass = null) {
 			if ($this->CourierId == 1 && $this->ShippedFlag) {
 				return sprintf('<a href="shipping_label.php?intShipmentId=%s" target="_blank" class="%s">FedEx Shipping Label</a>', $this->ShipmentId, $CssClass);

@@ -179,7 +179,12 @@
 					inventory_model_custom_field_helper.cfv_36 AS quick_notes,
 					inventory_model_custom_field_helper.cfv_34 AS dimensions,
 					inventory_model_custom_field_helper.cfv_27 AS weight,
-					inventory_model_custom_field_helper.cfv_31 AS packing_box,
+					(SELECT
+						short_description
+					FROM
+						location
+					WHERE
+						location_id = parent_asset) AS packing_box,
 					inventory_model_custom_field_helper.cfv_32 AS owning_company,
 					'' AS serial_number,
 					inventory_model_custom_field_helper.cfv_13 AS hs_code,

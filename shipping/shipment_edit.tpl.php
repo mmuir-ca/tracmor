@@ -75,6 +75,7 @@
 						$this->btnCancelCompleteShipment->RenderWithError();
 					}
 				?>
+				<?php $this->lblCommercialInvoiceLink->Render();?>
 			</td>
 		</tr>
 		<tr>

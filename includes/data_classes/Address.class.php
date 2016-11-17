@@ -61,9 +61,9 @@
 		// Suite 3G
 		// San Diego, CA 92109
 		public function __toStringFullAddress($cssClass = null) {
-			$strToReturn = sprintf('%s<br />', $this->Address1);
+			$strToReturn = sprintf('%s<br/>', $this->Address1);
 			if ($this->Address2) {
-				$strToReturn .= sprintf('%s<br />', $this->Address2);
+				$strToReturn .= sprintf('%s<br/>', $this->Address2);
 			}
 			
 			if ($this->StateProvince) {
@@ -87,7 +87,7 @@
 		public function __toStringFullAddressWithWebsite($cssClass = null) {
 			$objCompany = Company::Load($this->CompanyId);
 			$strWebsite = $objCompany->Website;
-			$strToReturn = sprintf('%s<br>%s',$this->__toStringFullAddress(),$strWebsite);
+			$strToReturn = sprintf('%s<br/>%s',$this->__toStringFullAddress(),$strWebsite);
 			
 			return $strToReturn;
 		}		
