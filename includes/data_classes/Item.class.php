@@ -85,6 +85,7 @@
 			$objToReturn->strCountryOrigin = $objDbRow->GetColumn($strAliasPrefix . 'country_origin', 'VarChar');
 			$objToReturn->strShippingValue = $objDbRow->GetColumn($strAliasPrefix . 'shipping_value', 'VarChar');
 			$objToReturn->strFCC = $objDbRow->GetColumn($strAliasPrefix . 'fcc', 'VarChar');
+			$objToReturn->strShowOnList = $objDbRow->GetColumn($strAliasPrefix.'show_on_list', 'VarChar');
 			
 			return $objToReturn;
 		}
@@ -155,7 +156,8 @@
 					asset_custom_field_helper.cfv_13 AS hs_code,
 					asset_custom_field_helper.cfv_14 AS country_origin,
 					asset_custom_field_helper.cfv_35 AS shipping_value,
-					asset_custom_field_helper.cfv_24 AS fcc
+					asset_custom_field_helper.cfv_24 AS fcc,
+					asset_custom_field_helper.cfv_43 AS show_on_list
 				FROM 
 					asset_transaction 
 					LEFT JOIN asset ON asset_transaction.asset_id = asset.asset_id
@@ -190,7 +192,8 @@
 					inventory_model_custom_field_helper.cfv_13 AS hs_code,
 					inventory_model_custom_field_helper.cfv_14 AS country_origin,
 					inventory_model_custom_field_helper.cfv_35 AS shipping_value,
-					inventory_model_custom_field_helper.cfv_24 AS fcc
+					inventory_model_custom_field_helper.cfv_24 AS fcc,
+					inventory_model_custom_field_helper.cfv_43 AS show_on_list
 				FROM 
 					inventory_transaction
 					LEFT JOIN inventory_location ON inventory_transaction.inventory_location_id = inventory_location.inventory_location_id
@@ -312,6 +315,13 @@
 					 * @return string
 					 */
 					return $this->strFCC;
+				
+				case 'ShowOnList':
+					/**
+					 * Gets the value for strShowOnList  
+					 * @return string
+					 */
+					return $this->strShowOnList;
 					
 				default:
 					try {
@@ -509,6 +519,19 @@
 						throw $objExc;
 					}
 						
+				case 'ShowOnList':
+					/**
+					 * Sets the value for strFCC 
+					 * @param string $mixValue
+					 * @return string
+					 */
+					try {
+						return ($this->strShowOnList = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+					
 				default:
 					try {
 						return parent::__set($strName, $mixValue);
@@ -538,6 +561,7 @@
 		protected $strCountryOrigin;
 		protected $strShippingValue;
 		protected $strFCC;
+		protected $strShowOnList;
 		
 	}
 ?>

@@ -162,6 +162,7 @@
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Shipping Value', '<?= $_ITEM->ShippingValue ?>', 'CssClass=dtg_column'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('FCC', '<?= $_ITEM->FCC ?>', 'CssClass=dtg_column', 'Display="false"'));
 	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Receipt #', '<?= $_ITEM->ReceiptNumber ?>', 'CssClass=dtg_column', 'Display="false"'));
+	    $this->dtgItem->AddColumn(new QDataGridColumnExt('Show on List', '<?= $_ITEM->ShowOnList ?>', 'CssClass=dtg_column', 'Display="false"'));
 	    
 	    $objStyle = $this->dtgItem->RowStyle;
 	    $objStyle->ForeColor = '#000000';
