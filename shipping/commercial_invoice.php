@@ -94,6 +94,16 @@ class CommercialInvoiceForm extends QForm {
 						) 
 				) 
 		);
+		$styleMediumBlackBorderTop = array (
+				'borders' => array (
+						'top' => array (
+								'style' => PHPExcel_Style_Border::BORDER_MEDIUM,
+								'color' => array (
+										'argb' => 'FF000000' 
+								) 
+						) 
+				) 
+		);
 		// Set page orientation and size
 		$pageSetup = $this->objPHPExcel->getActiveSheet ()->getPageSetup ();
 		$pageSetup->setOrientation ( PHPExcel_Worksheet_PageSetup::ORIENTATION_PORTRAIT )
@@ -156,7 +166,7 @@ class CommercialInvoiceForm extends QForm {
 		$sheet->setCellValue ( 'A18', "Country of Origin" )
 			->setCellValue ( 'B18', "HS Code" )
 			->setCellValue ( 'C18', "Marks / Nos" )
-			->setCellValue ( 'D18', "No on Pkg" )
+			->setCellValue ( 'D18', "No of Pkg" )
 			->setCellValue ( 'E18', "Full Description of goods" )
 			->setCellValue ( 'F18', "QTY" )
 			->setCellValue ( 'G18', "Unit of Measure (in)" )
@@ -197,16 +207,15 @@ class CommercialInvoiceForm extends QForm {
 		if ($val)
 			$sheet->setCellValue('A15' , $val);
 			
-
 		function unit_convert($v){
 			return 0.4 * (float) $v;
 		}	
-		
 		$row = 19;
 		$startRow = array();
 		$endRow = array();
 		$groupItems = array();
 		
+		// Go through all items and group by PackingBox
 		if($this->items) {
 			foreach ($this->items as $value){
 				// exclude items that show on list is No (so do if not 'No')
@@ -238,15 +247,23 @@ class CommercialInvoiceForm extends QForm {
 				}
 			}
 		}
+		// Write each column of item data
+		$increment = 1;
 		if ($groupItems){
 			foreach ($groupItems as $key => $listvalues){
 				$startRow[] = $row;
+				$firstItem = true;
 				foreach($listvalues as $item){
+					if ($firstItem){
+						$sheet->setCellValue('D'.$row , 'Box #'.$increment);
+						$firstItem = false;
+					}
+					
 					$centimeter = strtolower($item->Dimensions);
 									
 					if ($centimeter) {
 						$dimension = array_map('unit_convert', explode('x',$centimeter));
-						$inches = implode('x', $dimension);
+						$inches = implode(' x ', $dimension);
 					} else {
 						$inches = '';
 					}
@@ -257,7 +274,7 @@ class CommercialInvoiceForm extends QForm {
 					$sheet->setCellValue('A'.$row , $item->CountryOrigin)
 						->setCellValue('B'.$row , $item->HScode)
 						->setCellValue('C'.$row , $item->Code)
-						->setCellValue('D'.$row , $box)
+//						->setCellValue('D'.$row , $box)
 						->setCellValue('E'.$row , $item->ShortDescription)
 						->setCellValue('F'.$row , $item->Quantity)
 						->setCellValue('G'.$row , $inches)
@@ -266,11 +283,12 @@ class CommercialInvoiceForm extends QForm {
 						->setCellValue('K'.$row , $shipValue)
 						->setCellValue('L'.$row , '=F'.$row.'*K'.$row);
 
-					$pounds = '=IF(J'.$row.'="","",2.2*J'.$row.')';
+					$pounds = '=IF(J'.$row.'="","",2.205*J'.$row.')';
 					$sheet->setCellValue('I'.$row , $pounds);
 					unset($inches, $kgrams);
 					$row++;
 				}
+				$increment++;
 				$endRow[] = $row-1;
 			}
 		}
@@ -299,24 +317,61 @@ class CommercialInvoiceForm extends QForm {
 		}
 		
 
+		$sheet->getStyle ( 'D'.$row )->applyFromArray( $styleMediumBlackBorderOutline );
 		$sheet->getStyle ( 'I'.$row )->applyFromArray( $styleMediumBlackBorderOutline );
 		$sheet->getStyle ( 'J'.$row )->applyFromArray( $styleMediumBlackBorderOutline );
 		$sheet->getStyle ( 'L'.$row )->applyFromArray( $styleMediumBlackBorderOutline );
 
-		$sheet->setCellValue( 'I'.$row, '=SUM(I19:I'.$lastRow.')' );
-		$sheet->setCellValue( 'J'.$row, '=SUM(J19:J'.$lastRow.')' );
-		$sheet->setCellValue( 'L'.$row, '=SUM(L19:L'.$lastRow.')' );
+		$sumTotals = $row+1;
+
+		$sheet->getStyle ( 'D'.$sumTotals )->applyFromArray( $styleMediumBlackBorderOutline );
+		$sheet->getStyle ( 'I'.$sumTotals )->applyFromArray( $styleMediumBlackBorderOutline );
+		$sheet->getStyle ( 'J'.$sumTotals )->applyFromArray( $styleMediumBlackBorderOutline );
+		$sheet->getStyle ( 'L'.$sumTotals )->applyFromArray( $styleMediumBlackBorderOutline );
+		$sheet->setCellValue( 'D'.$row, 'Total No of Pkgs');
+		$sheet->setCellValue( 'I'.$row, 'Total Weight (lb)' );
+		$sheet->setCellValue( 'J'.$row, 'Total Weight (kg)' );
+		$sheet->setCellValue( 'K'.$row, 'Currency ' );
+		$sheet->setCellValue( 'L'.$row, 'Total Invoice Value' );
+		$sheet->setCellValue( 'D'.$sumTotals, --$increment);
+		$sheet->setCellValue( 'I'.$sumTotals, '=SUM(I19:I'.$lastRow.')' );
+		$sheet->setCellValue( 'J'.$sumTotals, '=SUM(J19:J'.$lastRow.')' );
+		$sheet->setCellValue( 'K'.$sumTotals, 'CAD' );
+		$sheet->setCellValue( 'L'.$sumTotals, '=SUM(L19:L'.$lastRow.')' );
 		$sheet->getStyle ( 'K19:K'.$lastRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
-		$sheet->getStyle ( 'L19:L'.$row)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
+		$sheet->getStyle ( 'L19:L'.$lastRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
+		$sheet->getStyle ( 'L'.$sumTotals)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
 		$sheet->getStyle ( 'A19:A'.$lastRow)->getAlignment()->setWrapText( true );
 		$sheet->getStyle ( 'G19:H'.$lastRow)->getAlignment()->setWrapText( true );
 		$sheet->getStyle ( 'F19:F'.$lastRow )->getAlignment ()->setHorizontal ( PHPExcel_Style_Alignment::HORIZONTAL_CENTER );
+		
+		$comment = $lastRow +4;
+		$sheet->mergeCells ( 'A'.$comment.':L'.$comment );
+		$sheet->setCellValue( 'A'.$comment, 'I DECLARE ALL THE INFORMATION CONTAINED IN THIS INVOICE TO BE TRUE AND CORRECT');
+		$comment++;
+		$comment++;
+		$sheet->mergeCells ( 'A'.$comment.':L'.$comment );
+		$sheet->setCellValue( 'A'.$comment, 'SIGNATURE OF SHIPPER / EXPORTER (type name and title and sign');
+		$comment++;
+		$comment++;
+		$sheet->mergeCells ( 'K'.$comment.':L'.$comment );
+		$sheet->setCellValue( 'K'.$comment , $shipment->ShipDate->__toString() );
+		$comment++;
+		$sheet->mergeCells ( 'A'.$comment.':I'.$comment );
+		$sheet->setCellValue( 'A'.$comment, 'Joyce Visser             Office Manager');
+		$sheet->mergeCells ( 'K'.$comment.':L'.$comment );
+		$sheet->setCellValue( 'K'.$comment, 'Date');
+		$sheet->getStyle ( 'A'.$comment.':I'.$comment )->applyFromArray( $styleMediumBlackBorderTop );
+		$sheet->getStyle ( 'K'.$comment.':L'.$comment )->applyFromArray( $styleMediumBlackBorderTop );
+		
+		$comment++;
 		
 		
 		// Generic styles
 		$sheet->getDefaultRowDimension ()->setRowHeight ( - 1 );
 		$sheet->getStyle ( 'A1:L1' )->getAlignment ()->setHorizontal ( PHPExcel_Style_Alignment::HORIZONTAL_CENTER );
 		$sheet->getStyle ( 'F12:L14' )->getAlignment ()->setHorizontal ( PHPExcel_Style_Alignment::HORIZONTAL_CENTER );
+		$sheet->getStyle ( 'K'.$sumTotals.':K'.$lastRow )->getAlignment ()->setHorizontal ( PHPExcel_Style_Alignment::HORIZONTAL_CENTER );
 		$sheet->getStyle ( 'F12:L14' )->getAlignment ()->setVertical ( PHPExcel_Style_Alignment::VERTICAL_TOP );
 		$sheet->getStyle ( 'F15:L17' )->getAlignment ()->setVertical ( PHPExcel_Style_Alignment::VERTICAL_TOP );
 		$sheet->getStyle ( 'F15:L17' )->getAlignment ()->setWrapText ( true );
