@@ -375,13 +375,11 @@ class CommercialInvoiceForm extends QForm {
 		$sheet->getStyle ( 'F12:L14' )->getAlignment ()->setVertical ( PHPExcel_Style_Alignment::VERTICAL_TOP );
 		$sheet->getStyle ( 'F15:L17' )->getAlignment ()->setVertical ( PHPExcel_Style_Alignment::VERTICAL_TOP );
 		$sheet->getStyle ( 'F15:L17' )->getAlignment ()->setWrapText ( true );
-		$sheet->getStyle ( 'A1:L1' )->getFont ()->applyFromArray ( ['bold' => true,
-																	'size' => 18	] );
-		$sheet->getStyle ( 'F12:L14' )->getFont ()->applyFromArray ( ['bold' => true,
-																	'size' => 18	] );
+		$sheet->getStyle ( 'A1:L1' )->getFont ()->setBold(true)->setSize(18);
+		$sheet->getStyle ( 'F12:L14' )->getFont ()->setBold(true)->setSize(18);
 		$sheet->getStyle ( 'A1:L1' )->applyFromArray ( $styleMediumBlackBorderOutline );
 		$sheet->getStyle ( 'A18:L18' )->getAlignment ()->setWrapText ( true );
-		$sheet->getStyle ( 'A18:L18' )->getFont ()->applyFromArray ( ['bold' => true ] );
+		$sheet->getStyle ( 'A18:L18' )->getFont ()->setBold(true);
 		
 		$sheet->getRowDimension ( 1 )->setRowHeight ( 40 );
 		$sheet->getRowDimension ( 18 )->setRowHeight ( 40 );

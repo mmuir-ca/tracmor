@@ -149,13 +149,13 @@
 					) AS receipt_number,
 					asset_custom_field_helper.cfv_36 AS quick_notes,
 					asset_custom_field_helper.cfv_34 AS dimensions,
-					asset_custom_field_helper.cfv_27 AS weight,
+					asset_custom_field_helper.cfv_35 AS weight,
 					asset_custom_field_helper.cfv_31 AS packing_box,
 					asset_custom_field_helper.cfv_32 AS owning_company,
 					asset_custom_field_helper.cfv_1 AS serial_number,
 					asset_custom_field_helper.cfv_13 AS hs_code,
 					asset_custom_field_helper.cfv_14 AS country_origin,
-					asset_custom_field_helper.cfv_35 AS shipping_value,
+					asset_custom_field_helper.cfv_28 AS shipping_value,
 					asset_custom_field_helper.cfv_24 AS fcc,
 					asset_custom_field_helper.cfv_43 AS show_on_list
 				FROM 
@@ -180,7 +180,7 @@
 					'' AS receipt_number,
 					inventory_model_custom_field_helper.cfv_36 AS quick_notes,
 					inventory_model_custom_field_helper.cfv_34 AS dimensions,
-					inventory_model_custom_field_helper.cfv_27 AS weight,
+					inventory_model_custom_field_helper.cfv_35 AS weight,
 					(SELECT
 						short_description
 					FROM
@@ -191,7 +191,7 @@
 					'' AS serial_number,
 					inventory_model_custom_field_helper.cfv_13 AS hs_code,
 					inventory_model_custom_field_helper.cfv_14 AS country_origin,
-					inventory_model_custom_field_helper.cfv_35 AS shipping_value,
+					inventory_model_custom_field_helper.cfv_28 AS shipping_value,
 					inventory_model_custom_field_helper.cfv_24 AS fcc,
 					inventory_model_custom_field_helper.cfv_43 AS show_on_list
 				FROM 
