@@ -208,7 +208,7 @@ class CommercialInvoiceForm extends QForm {
 			$sheet->setCellValue('A15' , $val);
 			
 		function unit_convert($v){
-			return 0.4 * (float) $v;
+			return round(0.4 * (float) $v, 2);
 		}	
 		$row = 19;
 		$startRow = array();
@@ -273,17 +273,19 @@ class CommercialInvoiceForm extends QForm {
 					$box = $item->PackingBox;
 					$sheet->setCellValue('A'.$row , $item->CountryOrigin)
 						->setCellValue('B'.$row , $item->HScode)
-						->setCellValue('C'.$row , $item->Code)
 //						->setCellValue('D'.$row , $box)
 						->setCellValue('E'.$row , $item->ShortDescription)
 						->setCellValue('F'.$row , $item->Quantity)
 						->setCellValue('G'.$row , $inches)
 						->setCellValue('H'.$row , $centimeter)
 						->setCellValue('J'.$row , $kgrams)
-						->setCellValue('K'.$row , $shipValue)
+						->setCellValue('K'.$row , str_replace("$", "", $shipValue))
 						->setCellValue('L'.$row , '=F'.$row.'*K'.$row);
+					if (strpos($item->ShortDescription, $item->Code) === false) {
+						$sheet->setCellValue('C'.$row , $item->Code);
+					}
 
-					$pounds = '=IF(J'.$row.'="","",2.205*J'.$row.')';
+					$pounds = '=IF(J'.$row.'="","",ROUND(2.205*J'.$row.',2))';
 					$sheet->setCellValue('I'.$row , $pounds);
 					unset($inches, $kgrams);
 					$row++;
@@ -338,6 +340,10 @@ class CommercialInvoiceForm extends QForm {
 		$sheet->setCellValue( 'J'.$sumTotals, '=SUM(J19:J'.$lastRow.')' );
 		$sheet->setCellValue( 'K'.$sumTotals, 'CAD' );
 		$sheet->setCellValue( 'L'.$sumTotals, '=SUM(L19:L'.$lastRow.')' );
+		$sheet->getStyle ( 'D'.$row)->getAlignment()->setWrapText( true );
+		$sheet->getStyle ( 'I'.$row)->getAlignment()->setWrapText( true );
+		$sheet->getStyle ( 'J'.$row)->getAlignment()->setWrapText( true );
+		$sheet->getStyle ( 'L'.$row)->getAlignment()->setWrapText( true );
 		$sheet->getStyle ( 'K19:K'.$lastRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
 		$sheet->getStyle ( 'L19:L'.$lastRow)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
 		$sheet->getStyle ( 'L'.$sumTotals)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_CURRENCY_USD_SIMPLE );
