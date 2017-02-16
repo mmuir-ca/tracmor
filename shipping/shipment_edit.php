@@ -803,7 +803,7 @@ elseif ($intDayOfWeek == 6) {
 		
 		$this->lstBox = new QListBox ( $this );
 		$this->lstBox->Name = "Add to Box";
-		$this->lstBox->Required = true;
+		$this->lstBox->Required = false;
 		$this->lstBox->AddItem ( '- Select One -', null );
 		$lstBoxArray = CustomFieldValue::LoadArrayByCustomFieldId ( 31, QQ::Clause ( QQ::OrderBy ( QQN::CustomFieldValue ()->ShortDescription ) ) );
 		
@@ -1893,7 +1893,7 @@ elseif ($objNewAsset->LocationId == 5) {
 								$this->txtNewAssetCode->Warning = sprintf ( "You do not have authorization to perform a transaction on locked asset %s.", $objLinkedAsset->AssetCode );
 								break;
 							} else {
-								if ($this->lblBoxValue != null && $this->lblBoxValue->Text != '<None>') {
+								if ($this->lblBoxValue != null && $this->lblBoxValue->Text !== '<None>') {
 									// change value
 									$objDatabase = AssetCustomFieldHelper::GetDatabase ();
 									$objDatabase->NonQuery ( sprintf ( "UPDATE `asset_custom_field_helper` SET `cfv_31`='%s' WHERE `asset_id`='%s'", $this->lblBoxValue->Text, $objLinkedAsset->AssetId ) );
