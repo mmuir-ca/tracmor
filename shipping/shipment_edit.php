@@ -1879,7 +1879,7 @@ elseif ($objNewAsset->LocationId == 5) {
 					$this->txtNewAssetCode->Warning = "You do not have authorization to perform a transaction on this asset.";
 				} else {
 					$objLinkedAssetArray = Asset::LoadChildLinkedArrayByParentAssetId ( $objNewAsset->AssetId );
-					if ($this->lblBoxValue != null && $this->lblBoxValue->Text != '<None>') {
+					if ($this->lblBoxValue != null && $this->lblBoxValue->Text !== '<None>') {
 						// change value
 						$objDatabase = AssetCustomFieldHelper::GetDatabase ();
 						$objDatabase->NonQuery ( sprintf ( "UPDATE `asset_custom_field_helper` SET `cfv_31`='%s' WHERE `asset_id`='%s'", $this->lblBoxValue->Text, $objNewAsset->AssetId ) );
