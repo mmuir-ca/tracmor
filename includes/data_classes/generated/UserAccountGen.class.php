@@ -140,6 +140,8 @@
 	 * @property RoleTransactionTypeAuthorization[] $_RoleTransactionTypeAuthorizationAsCreatedByArray the value for the private _objRoleTransactionTypeAuthorizationAsCreatedByArray (Read-Only) if set due to an ExpandAsArray on the role_transaction_type_authorization.created_by reverse relationship
 	 * @property RoleTransactionTypeAuthorization $_RoleTransactionTypeAuthorizationAsModifiedBy the value for the private _objRoleTransactionTypeAuthorizationAsModifiedBy (Read-Only) if set due to an expansion on the role_transaction_type_authorization.modified_by reverse relationship
 	 * @property RoleTransactionTypeAuthorization[] $_RoleTransactionTypeAuthorizationAsModifiedByArray the value for the private _objRoleTransactionTypeAuthorizationAsModifiedByArray (Read-Only) if set due to an ExpandAsArray on the role_transaction_type_authorization.modified_by reverse relationship
+	 * @property SamsAssetLog $_SamsAssetLogAsCreatedBy the value for the private _objSamsAssetLogAsCreatedBy (Read-Only) if set due to an expansion on the sams_asset_log.created_by reverse relationship
+	 * @property SamsAssetLog[] $_SamsAssetLogAsCreatedByArray the value for the private _objSamsAssetLogAsCreatedByArray (Read-Only) if set due to an ExpandAsArray on the sams_asset_log.created_by reverse relationship
 	 * @property Shipment $_ShipmentAsCreatedBy the value for the private _objShipmentAsCreatedBy (Read-Only) if set due to an expansion on the shipment.created_by reverse relationship
 	 * @property Shipment[] $_ShipmentAsCreatedByArray the value for the private _objShipmentAsCreatedByArray (Read-Only) if set due to an ExpandAsArray on the shipment.created_by reverse relationship
 	 * @property Shipment $_ShipmentAsModifiedBy the value for the private _objShipmentAsModifiedBy (Read-Only) if set due to an expansion on the shipment.modified_by reverse relationship
@@ -209,7 +211,7 @@
 		 * @var string strEmailAddress
 		 */
 		protected $strEmailAddress;
-		const EmailAddressMaxLength = 128;
+		const EmailAddressMaxLength = 50;
 		const EmailAddressDefault = null;
 
 
@@ -1141,6 +1143,22 @@
 		 * @var RoleTransactionTypeAuthorization[] _objRoleTransactionTypeAuthorizationAsModifiedByArray;
 		 */
 		private $_objRoleTransactionTypeAuthorizationAsModifiedByArray = array();
+
+		/**
+		 * Private member variable that stores a reference to a single SamsAssetLogAsCreatedBy object
+		 * (of type SamsAssetLog), if this UserAccount object was restored with
+		 * an expansion on the sams_asset_log association table.
+		 * @var SamsAssetLog _objSamsAssetLogAsCreatedBy;
+		 */
+		private $_objSamsAssetLogAsCreatedBy;
+
+		/**
+		 * Private member variable that stores a reference to an array of SamsAssetLogAsCreatedBy objects
+		 * (of type SamsAssetLog[]), if this UserAccount object was restored with
+		 * an ExpandAsArray on the sams_asset_log association table.
+		 * @var SamsAssetLog[] _objSamsAssetLogAsCreatedByArray;
+		 */
+		private $_objSamsAssetLogAsCreatedByArray = array();
 
 		/**
 		 * Private member variable that stores a reference to a single ShipmentAsCreatedBy object
@@ -2384,6 +2402,20 @@
 					$blnExpandedViaArray = true;
 				}
 
+				$strAlias = $strAliasPrefix . 'samsassetlogascreatedby__asset_log_id';
+				$strAliasName = array_key_exists($strAlias, $strColumnAliasArray) ? $strColumnAliasArray[$strAlias] : $strAlias;
+				if ((array_key_exists($strAlias, $strExpandAsArrayNodes)) &&
+					(!is_null($objDbRow->GetColumn($strAliasName)))) {
+					if ($intPreviousChildItemCount = count($objPreviousItem->_objSamsAssetLogAsCreatedByArray)) {
+						$objPreviousChildItem = $objPreviousItem->_objSamsAssetLogAsCreatedByArray[$intPreviousChildItemCount - 1];
+						$objChildItem = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlogascreatedby__', $strExpandAsArrayNodes, $objPreviousChildItem, $strColumnAliasArray);
+						if ($objChildItem)
+							$objPreviousItem->_objSamsAssetLogAsCreatedByArray[] = $objChildItem;
+					} else
+						$objPreviousItem->_objSamsAssetLogAsCreatedByArray[] = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlogascreatedby__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
+					$blnExpandedViaArray = true;
+				}
+
 				$strAlias = $strAliasPrefix . 'shipmentascreatedby__shipment_id';
 				$strAliasName = array_key_exists($strAlias, $strColumnAliasArray) ? $strColumnAliasArray[$strAlias] : $strAlias;
 				if ((array_key_exists($strAlias, $strExpandAsArrayNodes)) &&
@@ -3069,6 +3101,16 @@
 					$objToReturn->_objRoleTransactionTypeAuthorizationAsModifiedBy = RoleTransactionTypeAuthorization::InstantiateDbRow($objDbRow, $strAliasPrefix . 'roletransactiontypeauthorizationasmodifiedby__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
 			}
 
+			// Check for SamsAssetLogAsCreatedBy Virtual Binding
+			$strAlias = $strAliasPrefix . 'samsassetlogascreatedby__asset_log_id';
+			$strAliasName = array_key_exists($strAlias, $strColumnAliasArray) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if (($strExpandAsArrayNodes) && (array_key_exists($strAlias, $strExpandAsArrayNodes)))
+					$objToReturn->_objSamsAssetLogAsCreatedByArray[] = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlogascreatedby__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
+				else
+					$objToReturn->_objSamsAssetLogAsCreatedBy = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlogascreatedby__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
+			}
+
 			// Check for ShipmentAsCreatedBy Virtual Binding
 			$strAlias = $strAliasPrefix . 'shipmentascreatedby__shipment_id';
 			$strAliasName = array_key_exists($strAlias, $strColumnAliasArray) ? $strColumnAliasArray[$strAlias] : $strAlias;
@@ -3225,20 +3267,20 @@
 			, $objOptionalClauses
 			);
 		}
-			
+		
 		/**
 		 * Load a single UserAccount object,
 		 * by EmailAddress Index(es)
 		 * @param string $strEmailAddress
 		 * @return UserAccount
-		*/
+		 */
 		public static function LoadByEmailAddress($strEmailAddress, $objOptionalClauses = null) {
 			return UserAccount::QuerySingle(
-				QQ::Equal(QQN::UserAccount()->EmailAddress, $strEmailAddress)
-			, $objOptionalClauses
-			);
+					QQ::Equal(QQN::UserAccount()->EmailAddress, $strEmailAddress)
+					, $objOptionalClauses
+					);
 		}
-			
+		
 		/**
 		 * Load an array of UserAccount objects,
 		 * by CreatedBy Index(es)
@@ -4427,6 +4469,18 @@
 					// @return RoleTransactionTypeAuthorization[]
 					return (array) $this->_objRoleTransactionTypeAuthorizationAsModifiedByArray;
 
+				case '_SamsAssetLogAsCreatedBy':
+					// Gets the value for the private _objSamsAssetLogAsCreatedBy (Read-Only)
+					// if set due to an expansion on the sams_asset_log.created_by reverse relationship
+					// @return SamsAssetLog
+					return $this->_objSamsAssetLogAsCreatedBy;
+
+				case '_SamsAssetLogAsCreatedByArray':
+					// Gets the value for the private _objSamsAssetLogAsCreatedByArray (Read-Only)
+					// if set due to an ExpandAsArray on the sams_asset_log.created_by reverse relationship
+					// @return SamsAssetLog[]
+					return (array) $this->_objSamsAssetLogAsCreatedByArray;
+
 				case '_ShipmentAsCreatedBy':
 					// Gets the value for the private _objShipmentAsCreatedBy (Read-Only)
 					// if set due to an expansion on the shipment.created_by reverse relationship
@@ -4571,7 +4625,7 @@
 					}
 
 				case 'EmailAddress':
-					// Sets the value for strEmailAddress (Unique)
+					// Sets the value for strEmailAddress 
 					// @param string $mixValue
 					// @return string
 					try {
@@ -14292,6 +14346,188 @@
 
 			
 		
+		// Related Objects' Methods for SamsAssetLogAsCreatedBy
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated SamsAssetLogsAsCreatedBy as an array of SamsAssetLog objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return SamsAssetLog[]
+		*/ 
+		public function GetSamsAssetLogAsCreatedByArray($objOptionalClauses = null) {
+			if ((is_null($this->intUserAccountId)))
+				return array();
+
+			try {
+				return SamsAssetLog::LoadArrayByCreatedBy($this->intUserAccountId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated SamsAssetLogsAsCreatedBy
+		 * @return int
+		*/ 
+		public function CountSamsAssetLogsAsCreatedBy() {
+			if ((is_null($this->intUserAccountId)))
+				return 0;
+
+			return SamsAssetLog::CountByCreatedBy($this->intUserAccountId);
+		}
+
+		/**
+		 * Associates a SamsAssetLogAsCreatedBy
+		 * @param SamsAssetLog $objSamsAssetLog
+		 * @return void
+		*/ 
+		public function AssociateSamsAssetLogAsCreatedBy(SamsAssetLog $objSamsAssetLog) {
+			if ((is_null($this->intUserAccountId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSamsAssetLogAsCreatedBy on this unsaved UserAccount.');
+			if ((is_null($objSamsAssetLog->AssetLogId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSamsAssetLogAsCreatedBy on this UserAccount with an unsaved SamsAssetLog.');
+
+			// Get the Database Object for this Class
+			$objDatabase = UserAccount::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`sams_asset_log`
+				SET
+					`created_by` = ' . $objDatabase->SqlVariable($this->intUserAccountId) . '
+				WHERE
+					`asset_log_id` = ' . $objDatabase->SqlVariable($objSamsAssetLog->AssetLogId) . '
+			');
+
+			// Journaling (if applicable)
+			if ($objDatabase->JournalingDatabase) {
+				$objSamsAssetLog->CreatedBy = $this->intUserAccountId;
+				$objSamsAssetLog->Journal('UPDATE');
+			}
+		}
+
+		/**
+		 * Unassociates a SamsAssetLogAsCreatedBy
+		 * @param SamsAssetLog $objSamsAssetLog
+		 * @return void
+		*/ 
+		public function UnassociateSamsAssetLogAsCreatedBy(SamsAssetLog $objSamsAssetLog) {
+			if ((is_null($this->intUserAccountId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLogAsCreatedBy on this unsaved UserAccount.');
+			if ((is_null($objSamsAssetLog->AssetLogId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLogAsCreatedBy on this UserAccount with an unsaved SamsAssetLog.');
+
+			// Get the Database Object for this Class
+			$objDatabase = UserAccount::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`sams_asset_log`
+				SET
+					`created_by` = null
+				WHERE
+					`asset_log_id` = ' . $objDatabase->SqlVariable($objSamsAssetLog->AssetLogId) . ' AND
+					`created_by` = ' . $objDatabase->SqlVariable($this->intUserAccountId) . '
+			');
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				$objSamsAssetLog->CreatedBy = null;
+				$objSamsAssetLog->Journal('UPDATE');
+			}
+		}
+
+		/**
+		 * Unassociates all SamsAssetLogsAsCreatedBy
+		 * @return void
+		*/ 
+		public function UnassociateAllSamsAssetLogsAsCreatedBy() {
+			if ((is_null($this->intUserAccountId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLogAsCreatedBy on this unsaved UserAccount.');
+
+			// Get the Database Object for this Class
+			$objDatabase = UserAccount::GetDatabase();
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				foreach (SamsAssetLog::LoadArrayByCreatedBy($this->intUserAccountId) as $objSamsAssetLog) {
+					$objSamsAssetLog->CreatedBy = null;
+					$objSamsAssetLog->Journal('UPDATE');
+				}
+			}
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`sams_asset_log`
+				SET
+					`created_by` = null
+				WHERE
+					`created_by` = ' . $objDatabase->SqlVariable($this->intUserAccountId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated SamsAssetLogAsCreatedBy
+		 * @param SamsAssetLog $objSamsAssetLog
+		 * @return void
+		*/ 
+		public function DeleteAssociatedSamsAssetLogAsCreatedBy(SamsAssetLog $objSamsAssetLog) {
+			if ((is_null($this->intUserAccountId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLogAsCreatedBy on this unsaved UserAccount.');
+			if ((is_null($objSamsAssetLog->AssetLogId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLogAsCreatedBy on this UserAccount with an unsaved SamsAssetLog.');
+
+			// Get the Database Object for this Class
+			$objDatabase = UserAccount::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`sams_asset_log`
+				WHERE
+					`asset_log_id` = ' . $objDatabase->SqlVariable($objSamsAssetLog->AssetLogId) . ' AND
+					`created_by` = ' . $objDatabase->SqlVariable($this->intUserAccountId) . '
+			');
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				$objSamsAssetLog->Journal('DELETE');
+			}
+		}
+
+		/**
+		 * Deletes all associated SamsAssetLogsAsCreatedBy
+		 * @return void
+		*/ 
+		public function DeleteAllSamsAssetLogsAsCreatedBy() {
+			if ((is_null($this->intUserAccountId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLogAsCreatedBy on this unsaved UserAccount.');
+
+			// Get the Database Object for this Class
+			$objDatabase = UserAccount::GetDatabase();
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				foreach (SamsAssetLog::LoadArrayByCreatedBy($this->intUserAccountId) as $objSamsAssetLog) {
+					$objSamsAssetLog->Journal('DELETE');
+				}
+			}
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`sams_asset_log`
+				WHERE
+					`created_by` = ' . $objDatabase->SqlVariable($this->intUserAccountId) . '
+			');
+		}
+
+			
+		
 		// Related Objects' Methods for ShipmentAsCreatedBy
 		//-------------------------------------------------------------------
 
@@ -15725,6 +15961,7 @@
 	 * @property-read QQReverseReferenceNodeRoleModuleAuthorization $RoleModuleAuthorizationAsModifiedBy
 	 * @property-read QQReverseReferenceNodeRoleTransactionTypeAuthorization $RoleTransactionTypeAuthorizationAsCreatedBy
 	 * @property-read QQReverseReferenceNodeRoleTransactionTypeAuthorization $RoleTransactionTypeAuthorizationAsModifiedBy
+	 * @property-read QQReverseReferenceNodeSamsAssetLog $SamsAssetLogAsCreatedBy
 	 * @property-read QQReverseReferenceNodeShipment $ShipmentAsCreatedBy
 	 * @property-read QQReverseReferenceNodeShipment $ShipmentAsModifiedBy
 	 * @property-read QQReverseReferenceNodeTransaction $TransactionAsCreatedBy
@@ -15884,6 +16121,8 @@
 					return new QQReverseReferenceNodeRoleTransactionTypeAuthorization($this, 'roletransactiontypeauthorizationascreatedby', 'reverse_reference', 'created_by');
 				case 'RoleTransactionTypeAuthorizationAsModifiedBy':
 					return new QQReverseReferenceNodeRoleTransactionTypeAuthorization($this, 'roletransactiontypeauthorizationasmodifiedby', 'reverse_reference', 'modified_by');
+				case 'SamsAssetLogAsCreatedBy':
+					return new QQReverseReferenceNodeSamsAssetLog($this, 'samsassetlogascreatedby', 'reverse_reference', 'created_by');
 				case 'ShipmentAsCreatedBy':
 					return new QQReverseReferenceNodeShipment($this, 'shipmentascreatedby', 'reverse_reference', 'created_by');
 				case 'ShipmentAsModifiedBy':
@@ -15984,6 +16223,7 @@
 	 * @property-read QQReverseReferenceNodeRoleModuleAuthorization $RoleModuleAuthorizationAsModifiedBy
 	 * @property-read QQReverseReferenceNodeRoleTransactionTypeAuthorization $RoleTransactionTypeAuthorizationAsCreatedBy
 	 * @property-read QQReverseReferenceNodeRoleTransactionTypeAuthorization $RoleTransactionTypeAuthorizationAsModifiedBy
+	 * @property-read QQReverseReferenceNodeSamsAssetLog $SamsAssetLogAsCreatedBy
 	 * @property-read QQReverseReferenceNodeShipment $ShipmentAsCreatedBy
 	 * @property-read QQReverseReferenceNodeShipment $ShipmentAsModifiedBy
 	 * @property-read QQReverseReferenceNodeTransaction $TransactionAsCreatedBy
@@ -16144,6 +16384,8 @@
 					return new QQReverseReferenceNodeRoleTransactionTypeAuthorization($this, 'roletransactiontypeauthorizationascreatedby', 'reverse_reference', 'created_by');
 				case 'RoleTransactionTypeAuthorizationAsModifiedBy':
 					return new QQReverseReferenceNodeRoleTransactionTypeAuthorization($this, 'roletransactiontypeauthorizationasmodifiedby', 'reverse_reference', 'modified_by');
+				case 'SamsAssetLogAsCreatedBy':
+					return new QQReverseReferenceNodeSamsAssetLog($this, 'samsassetlogascreatedby', 'reverse_reference', 'created_by');
 				case 'ShipmentAsCreatedBy':
 					return new QQReverseReferenceNodeShipment($this, 'shipmentascreatedby', 'reverse_reference', 'created_by');
 				case 'ShipmentAsModifiedBy':

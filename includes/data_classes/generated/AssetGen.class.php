@@ -44,6 +44,8 @@
 	 * @property AssetTransaction[] $_AssetTransactionArray the value for the private _objAssetTransactionArray (Read-Only) if set due to an ExpandAsArray on the asset_transaction.asset_id reverse relationship
 	 * @property AssetTransaction $_AssetTransactionAsNew the value for the private _objAssetTransactionAsNew (Read-Only) if set due to an expansion on the asset_transaction.new_asset_id reverse relationship
 	 * @property AssetTransaction[] $_AssetTransactionAsNewArray the value for the private _objAssetTransactionAsNewArray (Read-Only) if set due to an ExpandAsArray on the asset_transaction.new_asset_id reverse relationship
+	 * @property SamsAssetLog $_SamsAssetLog the value for the private _objSamsAssetLog (Read-Only) if set due to an expansion on the sams_asset_log.asset_id reverse relationship
+	 * @property SamsAssetLog[] $_SamsAssetLogArray the value for the private _objSamsAssetLogArray (Read-Only) if set due to an ExpandAsArray on the sams_asset_log.asset_id reverse relationship
 	 * @property boolean $__Restored whether or not this object was restored from the database (as opposed to created new)
 	 */
 	class AssetGen extends QBaseClass {
@@ -237,6 +239,22 @@
 		 * @var AssetTransaction[] _objAssetTransactionAsNewArray;
 		 */
 		private $_objAssetTransactionAsNewArray = array();
+
+		/**
+		 * Private member variable that stores a reference to a single SamsAssetLog object
+		 * (of type SamsAssetLog), if this Asset object was restored with
+		 * an expansion on the sams_asset_log association table.
+		 * @var SamsAssetLog _objSamsAssetLog;
+		 */
+		private $_objSamsAssetLog;
+
+		/**
+		 * Private member variable that stores a reference to an array of SamsAssetLog objects
+		 * (of type SamsAssetLog[]), if this Asset object was restored with
+		 * an ExpandAsArray on the sams_asset_log association table.
+		 * @var SamsAssetLog[] _objSamsAssetLogArray;
+		 */
+		private $_objSamsAssetLogArray = array();
 
 		/**
 		 * Protected array of virtual attributes for this object (e.g. extra/other calculated and/or non-object bound
@@ -735,6 +753,20 @@
 					$blnExpandedViaArray = true;
 				}
 
+				$strAlias = $strAliasPrefix . 'samsassetlog__asset_log_id';
+				$strAliasName = array_key_exists($strAlias, $strColumnAliasArray) ? $strColumnAliasArray[$strAlias] : $strAlias;
+				if ((array_key_exists($strAlias, $strExpandAsArrayNodes)) &&
+					(!is_null($objDbRow->GetColumn($strAliasName)))) {
+					if ($intPreviousChildItemCount = count($objPreviousItem->_objSamsAssetLogArray)) {
+						$objPreviousChildItem = $objPreviousItem->_objSamsAssetLogArray[$intPreviousChildItemCount - 1];
+						$objChildItem = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlog__', $strExpandAsArrayNodes, $objPreviousChildItem, $strColumnAliasArray);
+						if ($objChildItem)
+							$objPreviousItem->_objSamsAssetLogArray[] = $objChildItem;
+					} else
+						$objPreviousItem->_objSamsAssetLogArray[] = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlog__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
+					$blnExpandedViaArray = true;
+				}
+
 				// Either return false to signal array expansion, or check-to-reset the Alias prefix and move on
 				if ($blnExpandedViaArray)
 					return false;
@@ -866,6 +898,16 @@
 					$objToReturn->_objAssetTransactionAsNewArray[] = AssetTransaction::InstantiateDbRow($objDbRow, $strAliasPrefix . 'assettransactionasnew__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
 				else
 					$objToReturn->_objAssetTransactionAsNew = AssetTransaction::InstantiateDbRow($objDbRow, $strAliasPrefix . 'assettransactionasnew__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
+			}
+
+			// Check for SamsAssetLog Virtual Binding
+			$strAlias = $strAliasPrefix . 'samsassetlog__asset_log_id';
+			$strAliasName = array_key_exists($strAlias, $strColumnAliasArray) ? $strColumnAliasArray[$strAlias] : $strAlias;
+			if (!is_null($objDbRow->GetColumn($strAliasName))) {
+				if (($strExpandAsArrayNodes) && (array_key_exists($strAlias, $strExpandAsArrayNodes)))
+					$objToReturn->_objSamsAssetLogArray[] = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlog__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
+				else
+					$objToReturn->_objSamsAssetLog = SamsAssetLog::InstantiateDbRow($objDbRow, $strAliasPrefix . 'samsassetlog__', $strExpandAsArrayNodes, null, $strColumnAliasArray);
 			}
 
 			return $objToReturn;
@@ -1734,6 +1776,18 @@
 					// if set due to an ExpandAsArray on the asset_transaction.new_asset_id reverse relationship
 					// @return AssetTransaction[]
 					return (array) $this->_objAssetTransactionAsNewArray;
+
+				case '_SamsAssetLog':
+					// Gets the value for the private _objSamsAssetLog (Read-Only)
+					// if set due to an expansion on the sams_asset_log.asset_id reverse relationship
+					// @return SamsAssetLog
+					return $this->_objSamsAssetLog;
+
+				case '_SamsAssetLogArray':
+					// Gets the value for the private _objSamsAssetLogArray (Read-Only)
+					// if set due to an ExpandAsArray on the sams_asset_log.asset_id reverse relationship
+					// @return SamsAssetLog[]
+					return (array) $this->_objSamsAssetLogArray;
 
 
 				case '__Restored':
@@ -2696,6 +2750,188 @@
 			');
 		}
 
+			
+		
+		// Related Objects' Methods for SamsAssetLog
+		//-------------------------------------------------------------------
+
+		/**
+		 * Gets all associated SamsAssetLogs as an array of SamsAssetLog objects
+		 * @param QQClause[] $objOptionalClauses additional optional QQClause objects for this query
+		 * @return SamsAssetLog[]
+		*/ 
+		public function GetSamsAssetLogArray($objOptionalClauses = null) {
+			if ((is_null($this->intAssetId)))
+				return array();
+
+			try {
+				return SamsAssetLog::LoadArrayByAssetId($this->intAssetId, $objOptionalClauses);
+			} catch (QCallerException $objExc) {
+				$objExc->IncrementOffset();
+				throw $objExc;
+			}
+		}
+
+		/**
+		 * Counts all associated SamsAssetLogs
+		 * @return int
+		*/ 
+		public function CountSamsAssetLogs() {
+			if ((is_null($this->intAssetId)))
+				return 0;
+
+			return SamsAssetLog::CountByAssetId($this->intAssetId);
+		}
+
+		/**
+		 * Associates a SamsAssetLog
+		 * @param SamsAssetLog $objSamsAssetLog
+		 * @return void
+		*/ 
+		public function AssociateSamsAssetLog(SamsAssetLog $objSamsAssetLog) {
+			if ((is_null($this->intAssetId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSamsAssetLog on this unsaved Asset.');
+			if ((is_null($objSamsAssetLog->AssetLogId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call AssociateSamsAssetLog on this Asset with an unsaved SamsAssetLog.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Asset::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`sams_asset_log`
+				SET
+					`asset_id` = ' . $objDatabase->SqlVariable($this->intAssetId) . '
+				WHERE
+					`asset_log_id` = ' . $objDatabase->SqlVariable($objSamsAssetLog->AssetLogId) . '
+			');
+
+			// Journaling (if applicable)
+			if ($objDatabase->JournalingDatabase) {
+				$objSamsAssetLog->AssetId = $this->intAssetId;
+				$objSamsAssetLog->Journal('UPDATE');
+			}
+		}
+
+		/**
+		 * Unassociates a SamsAssetLog
+		 * @param SamsAssetLog $objSamsAssetLog
+		 * @return void
+		*/ 
+		public function UnassociateSamsAssetLog(SamsAssetLog $objSamsAssetLog) {
+			if ((is_null($this->intAssetId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLog on this unsaved Asset.');
+			if ((is_null($objSamsAssetLog->AssetLogId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLog on this Asset with an unsaved SamsAssetLog.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Asset::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`sams_asset_log`
+				SET
+					`asset_id` = null
+				WHERE
+					`asset_log_id` = ' . $objDatabase->SqlVariable($objSamsAssetLog->AssetLogId) . ' AND
+					`asset_id` = ' . $objDatabase->SqlVariable($this->intAssetId) . '
+			');
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				$objSamsAssetLog->AssetId = null;
+				$objSamsAssetLog->Journal('UPDATE');
+			}
+		}
+
+		/**
+		 * Unassociates all SamsAssetLogs
+		 * @return void
+		*/ 
+		public function UnassociateAllSamsAssetLogs() {
+			if ((is_null($this->intAssetId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLog on this unsaved Asset.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Asset::GetDatabase();
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				foreach (SamsAssetLog::LoadArrayByAssetId($this->intAssetId) as $objSamsAssetLog) {
+					$objSamsAssetLog->AssetId = null;
+					$objSamsAssetLog->Journal('UPDATE');
+				}
+			}
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				UPDATE
+					`sams_asset_log`
+				SET
+					`asset_id` = null
+				WHERE
+					`asset_id` = ' . $objDatabase->SqlVariable($this->intAssetId) . '
+			');
+		}
+
+		/**
+		 * Deletes an associated SamsAssetLog
+		 * @param SamsAssetLog $objSamsAssetLog
+		 * @return void
+		*/ 
+		public function DeleteAssociatedSamsAssetLog(SamsAssetLog $objSamsAssetLog) {
+			if ((is_null($this->intAssetId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLog on this unsaved Asset.');
+			if ((is_null($objSamsAssetLog->AssetLogId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLog on this Asset with an unsaved SamsAssetLog.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Asset::GetDatabase();
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`sams_asset_log`
+				WHERE
+					`asset_log_id` = ' . $objDatabase->SqlVariable($objSamsAssetLog->AssetLogId) . ' AND
+					`asset_id` = ' . $objDatabase->SqlVariable($this->intAssetId) . '
+			');
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				$objSamsAssetLog->Journal('DELETE');
+			}
+		}
+
+		/**
+		 * Deletes all associated SamsAssetLogs
+		 * @return void
+		*/ 
+		public function DeleteAllSamsAssetLogs() {
+			if ((is_null($this->intAssetId)))
+				throw new QUndefinedPrimaryKeyException('Unable to call UnassociateSamsAssetLog on this unsaved Asset.');
+
+			// Get the Database Object for this Class
+			$objDatabase = Asset::GetDatabase();
+
+			// Journaling
+			if ($objDatabase->JournalingDatabase) {
+				foreach (SamsAssetLog::LoadArrayByAssetId($this->intAssetId) as $objSamsAssetLog) {
+					$objSamsAssetLog->Journal('DELETE');
+				}
+			}
+
+			// Perform the SQL Query
+			$objDatabase->NonQuery('
+				DELETE FROM
+					`sams_asset_log`
+				WHERE
+					`asset_id` = ' . $objDatabase->SqlVariable($this->intAssetId) . '
+			');
+		}
+
 
 
 
@@ -3018,6 +3254,7 @@
 	 * @property-read QQReverseReferenceNodeAssetCustomFieldHelper $AssetCustomFieldHelper
 	 * @property-read QQReverseReferenceNodeAssetTransaction $AssetTransaction
 	 * @property-read QQReverseReferenceNodeAssetTransaction $AssetTransactionAsNew
+	 * @property-read QQReverseReferenceNodeSamsAssetLog $SamsAssetLog
 	 */
 	class QQNodeAsset extends QQNode {
 		protected $strTableName = 'asset';
@@ -3077,6 +3314,8 @@
 					return new QQReverseReferenceNodeAssetTransaction($this, 'assettransaction', 'reverse_reference', 'asset_id');
 				case 'AssetTransactionAsNew':
 					return new QQReverseReferenceNodeAssetTransaction($this, 'assettransactionasnew', 'reverse_reference', 'new_asset_id');
+				case 'SamsAssetLog':
+					return new QQReverseReferenceNodeSamsAssetLog($this, 'samsassetlog', 'reverse_reference', 'asset_id');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('asset_id', 'AssetId', 'integer', $this);
@@ -3118,6 +3357,7 @@
 	 * @property-read QQReverseReferenceNodeAssetCustomFieldHelper $AssetCustomFieldHelper
 	 * @property-read QQReverseReferenceNodeAssetTransaction $AssetTransaction
 	 * @property-read QQReverseReferenceNodeAssetTransaction $AssetTransactionAsNew
+	 * @property-read QQReverseReferenceNodeSamsAssetLog $SamsAssetLog
 	 * @property-read QQNode $_PrimaryKeyNode
 	 */
 	class QQReverseReferenceNodeAsset extends QQReverseReferenceNode {
@@ -3178,6 +3418,8 @@
 					return new QQReverseReferenceNodeAssetTransaction($this, 'assettransaction', 'reverse_reference', 'asset_id');
 				case 'AssetTransactionAsNew':
 					return new QQReverseReferenceNodeAssetTransaction($this, 'assettransactionasnew', 'reverse_reference', 'new_asset_id');
+				case 'SamsAssetLog':
+					return new QQReverseReferenceNodeSamsAssetLog($this, 'samsassetlog', 'reverse_reference', 'asset_id');
 
 				case '_PrimaryKeyNode':
 					return new QQNode('asset_id', 'AssetId', 'integer', $this);

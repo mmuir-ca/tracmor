@@ -295,6 +295,12 @@
 			return new QQNodeRoleTransactionTypeAuthorization('role_transaction_type_authorization', null, null);
 		}
 		/**
+		 * @return QQNodeSamsAssetLog
+		 */
+		static public function SamsAssetLog() {
+			return new QQNodeSamsAssetLog('sams_asset_log', null, null);
+		}
+		/**
 		 * @return QQNodeShipment
 		 */
 		static public function Shipment() {

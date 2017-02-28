@@ -342,6 +342,13 @@
 		QApplicationBase::$ClassFile['roletransactiontypeauthorizationmetacontrol'] = __DATA_META_CONTROLS__ . '/RoleTransactionTypeAuthorizationMetaControl.class.php';
 		QApplicationBase::$ClassFile['roletransactiontypeauthorizationdatagrid'] = __DATA_META_CONTROLS__ . '/RoleTransactionTypeAuthorizationDataGrid.class.php';
 
+	// ClassPaths for the SamsAssetLog class
+		QApplicationBase::$ClassFile['samsassetlog'] = __DATA_CLASSES__ . '/SamsAssetLog.class.php';
+		QApplicationBase::$ClassFile['qqnodesamsassetlog'] = __DATA_CLASSES__ . '/SamsAssetLog.class.php';
+		QApplicationBase::$ClassFile['qqreversereferencenodesamsassetlog'] = __DATA_CLASSES__ . '/SamsAssetLog.class.php';
+		QApplicationBase::$ClassFile['samsassetlogmetacontrol'] = __DATA_META_CONTROLS__ . '/SamsAssetLogMetaControl.class.php';
+		QApplicationBase::$ClassFile['samsassetlogdatagrid'] = __DATA_META_CONTROLS__ . '/SamsAssetLogDataGrid.class.php';
+
 	// ClassPaths for the Shipment class
 		QApplicationBase::$ClassFile['shipment'] = __DATA_CLASSES__ . '/Shipment.class.php';
 		QApplicationBase::$ClassFile['qqnodeshipment'] = __DATA_CLASSES__ . '/Shipment.class.php';

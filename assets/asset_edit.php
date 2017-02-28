@@ -161,8 +161,8 @@
 			}*/
 
 			if (!$this->intTransactionTypeId && $this->ctlAssetEdit->Display) {
-        $this->dtgChildAssets->SetDataBinder('dtgChildAssets_Bind');
-      }
+				$this->dtgChildAssets->SetDataBinder('dtgChildAssets_Bind');
+			}
 
 			$this->DisplayChildAssets();
 		}

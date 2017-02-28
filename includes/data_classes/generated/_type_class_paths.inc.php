@@ -5,4 +5,6 @@
 		QApplicationBase::$ClassFile['depreciationmethodqtype'] = __DATA_CLASSES__ . '/DepreciationMethodQtype.class.php';
 	// ClassPaths for the EntityQtype type class
 		QApplicationBase::$ClassFile['entityqtype'] = __DATA_CLASSES__ . '/EntityQtype.class.php';
+	// ClassPaths for the SamsLogQtype type class
+		QApplicationBase::$ClassFile['samslogqtype'] = __DATA_CLASSES__ . '/SamsLogQtype.class.php';
 ?>
