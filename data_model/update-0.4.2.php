@@ -1,6 +1,6 @@
 <?php
 /*
- * This script updates a Tracmor database to version 0.4.1
+ * This script updates a Tracmor database to version 0.4.2
  */
 require_once('../includes/prepend.inc.php');
 
