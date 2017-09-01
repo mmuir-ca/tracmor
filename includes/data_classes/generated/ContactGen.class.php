@@ -27,6 +27,7 @@
 	 * @property string $PhoneMobile the value for strPhoneMobile 
 	 * @property string $Fax the value for strFax 
 	 * @property string $Description the value for strDescription 
+	 * @property boolean $ActiveFlag the value for blnActiveFlag (Not Null)
 	 * @property integer $CreatedBy the value for intCreatedBy 
 	 * @property QDateTime $CreationDate the value for dttCreationDate 
 	 * @property integer $ModifiedBy the value for intModifiedBy 
@@ -156,6 +157,14 @@
 		 */
 		protected $strDescription;
 		const DescriptionDefault = null;
+
+
+		/**
+		 * Protected member variable that maps to the database column contact.active_flag
+		 * @var boolean blnActiveFlag
+		 */
+		protected $blnActiveFlag;
+		const ActiveFlagDefault = null;
 
 
 		/**
@@ -672,6 +681,7 @@
 			$objBuilder->AddSelectItem($strTableName, 'phone_mobile', $strAliasPrefix . 'phone_mobile');
 			$objBuilder->AddSelectItem($strTableName, 'fax', $strAliasPrefix . 'fax');
 			$objBuilder->AddSelectItem($strTableName, 'description', $strAliasPrefix . 'description');
+			$objBuilder->AddSelectItem($strTableName, 'active_flag', $strAliasPrefix . 'active_flag');
 			$objBuilder->AddSelectItem($strTableName, 'created_by', $strAliasPrefix . 'created_by');
 			$objBuilder->AddSelectItem($strTableName, 'creation_date', $strAliasPrefix . 'creation_date');
 			$objBuilder->AddSelectItem($strTableName, 'modified_by', $strAliasPrefix . 'modified_by');
@@ -819,6 +829,8 @@
 			$objToReturn->strFax = $objDbRow->GetColumn($strAliasName, 'VarChar');
 			$strAliasName = array_key_exists($strAliasPrefix . 'description', $strColumnAliasArray) ? $strColumnAliasArray[$strAliasPrefix . 'description'] : $strAliasPrefix . 'description';
 			$objToReturn->strDescription = $objDbRow->GetColumn($strAliasName, 'Blob');
+			$strAliasName = array_key_exists($strAliasPrefix . 'active_flag', $strColumnAliasArray) ? $strColumnAliasArray[$strAliasPrefix . 'active_flag'] : $strAliasPrefix . 'active_flag';
+			$objToReturn->blnActiveFlag = $objDbRow->GetColumn($strAliasName, 'Bit');
 			$strAliasName = array_key_exists($strAliasPrefix . 'created_by', $strColumnAliasArray) ? $strColumnAliasArray[$strAliasPrefix . 'created_by'] : $strAliasPrefix . 'created_by';
 			$objToReturn->intCreatedBy = $objDbRow->GetColumn($strAliasName, 'Integer');
 			$strAliasName = array_key_exists($strAliasPrefix . 'creation_date', $strColumnAliasArray) ? $strColumnAliasArray[$strAliasPrefix . 'creation_date'] : $strAliasPrefix . 'creation_date';
@@ -1190,6 +1202,7 @@
 							`phone_mobile`,
 							`fax`,
 							`description`,
+							`active_flag`,
 							`created_by`,
 							`creation_date`,
 							`modified_by`
@@ -1205,6 +1218,7 @@
 							' . $objDatabase->SqlVariable($this->strPhoneMobile) . ',
 							' . $objDatabase->SqlVariable($this->strFax) . ',
 							' . $objDatabase->SqlVariable($this->strDescription) . ',
+							' . $objDatabase->SqlVariable($this->blnActiveFlag) . ',
 							' . $objDatabase->SqlVariable($this->intCreatedBy) . ',
 							' . $objDatabase->SqlVariable($this->dttCreationDate) . ',
 							' . $objDatabase->SqlVariable($this->intModifiedBy) . '
@@ -1253,6 +1267,7 @@
 							`phone_mobile` = ' . $objDatabase->SqlVariable($this->strPhoneMobile) . ',
 							`fax` = ' . $objDatabase->SqlVariable($this->strFax) . ',
 							`description` = ' . $objDatabase->SqlVariable($this->strDescription) . ',
+							`active_flag` = ' . $objDatabase->SqlVariable($this->blnActiveFlag) . ',
 							`created_by` = ' . $objDatabase->SqlVariable($this->intCreatedBy) . ',
 							`creation_date` = ' . $objDatabase->SqlVariable($this->dttCreationDate) . ',
 							`modified_by` = ' . $objDatabase->SqlVariable($this->intModifiedBy) . '
@@ -1392,6 +1407,7 @@
 			$this->strPhoneMobile = $objReloaded->strPhoneMobile;
 			$this->strFax = $objReloaded->strFax;
 			$this->strDescription = $objReloaded->strDescription;
+			$this->blnActiveFlag = $objReloaded->blnActiveFlag;
 			$this->CreatedBy = $objReloaded->CreatedBy;
 			$this->dttCreationDate = $objReloaded->dttCreationDate;
 			$this->ModifiedBy = $objReloaded->ModifiedBy;
@@ -1420,6 +1436,7 @@
 					`phone_mobile`,
 					`fax`,
 					`description`,
+					`active_flag`,
 					`created_by`,
 					`creation_date`,
 					`modified_by`,
@@ -1439,6 +1456,7 @@
 					' . $objDatabase->SqlVariable($this->strPhoneMobile) . ',
 					' . $objDatabase->SqlVariable($this->strFax) . ',
 					' . $objDatabase->SqlVariable($this->strDescription) . ',
+					' . $objDatabase->SqlVariable($this->blnActiveFlag) . ',
 					' . $objDatabase->SqlVariable($this->intCreatedBy) . ',
 					' . $objDatabase->SqlVariable($this->dttCreationDate) . ',
 					' . $objDatabase->SqlVariable($this->intModifiedBy) . ',
@@ -1551,6 +1569,11 @@
 					// Gets the value for strDescription 
 					// @return string
 					return $this->strDescription;
+
+				case 'ActiveFlag':
+					// Gets the value for blnActiveFlag (Not Null)
+					// @return boolean
+					return $this->blnActiveFlag;
 
 				case 'CreatedBy':
 					// Gets the value for intCreatedBy 
@@ -1853,6 +1876,17 @@
 					// @return string
 					try {
 						return ($this->strDescription = QType::Cast($mixValue, QType::String));
+					} catch (QCallerException $objExc) {
+						$objExc->IncrementOffset();
+						throw $objExc;
+					}
+
+				case 'ActiveFlag':
+					// Sets the value for blnActiveFlag (Not Null)
+					// @param boolean $mixValue
+					// @return boolean
+					try {
+						return ($this->blnActiveFlag = QType::Cast($mixValue, QType::Boolean));
 					} catch (QCallerException $objExc) {
 						$objExc->IncrementOffset();
 						throw $objExc;
@@ -3013,6 +3047,7 @@
 			$strToReturn .= '<element name="PhoneMobile" type="xsd:string"/>';
 			$strToReturn .= '<element name="Fax" type="xsd:string"/>';
 			$strToReturn .= '<element name="Description" type="xsd:string"/>';
+			$strToReturn .= '<element name="ActiveFlag" type="xsd:boolean"/>';
 			$strToReturn .= '<element name="CreatedByObject" type="xsd1:UserAccount"/>';
 			$strToReturn .= '<element name="CreationDate" type="xsd:dateTime"/>';
 			$strToReturn .= '<element name="ModifiedByObject" type="xsd1:UserAccount"/>';
@@ -3069,6 +3104,8 @@
 				$objToReturn->strFax = $objSoapObject->Fax;
 			if (property_exists($objSoapObject, 'Description'))
 				$objToReturn->strDescription = $objSoapObject->Description;
+			if (property_exists($objSoapObject, 'ActiveFlag'))
+				$objToReturn->blnActiveFlag = $objSoapObject->ActiveFlag;
 			if ((property_exists($objSoapObject, 'CreatedByObject')) &&
 				($objSoapObject->CreatedByObject))
 				$objToReturn->CreatedByObject = UserAccount::GetObjectFromSoapObject($objSoapObject->CreatedByObject);
@@ -3197,6 +3234,7 @@
 				$objQueryExpansion->AddSelectItem(sprintf('`%s__%s`.`phone_mobile` AS `%s__%s__phone_mobile`', $strParentAlias, $strAlias, $strParentAlias, $strAlias));
 				$objQueryExpansion->AddSelectItem(sprintf('`%s__%s`.`fax` AS `%s__%s__fax`', $strParentAlias, $strAlias, $strParentAlias, $strAlias));
 				$objQueryExpansion->AddSelectItem(sprintf('`%s__%s`.`description` AS `%s__%s__description`', $strParentAlias, $strAlias, $strParentAlias, $strAlias));
+				$objQueryExpansion->AddSelectItem(sprintf('`%s__%s`.`active_flag` AS `%s__%s__active_flag`', $strParentAlias, $strAlias, $strParentAlias, $strAlias));
 				$objQueryExpansion->AddSelectItem(sprintf('`%s__%s`.`created_by` AS `%s__%s__created_by`', $strParentAlias, $strAlias, $strParentAlias, $strAlias));
 				$objQueryExpansion->AddSelectItem(sprintf('`%s__%s`.`creation_date` AS `%s__%s__creation_date`', $strParentAlias, $strAlias, $strParentAlias, $strAlias));
 				$objQueryExpansion->AddSelectItem(sprintf('`%s__%s`.`modified_by` AS `%s__%s__modified_by`', $strParentAlias, $strAlias, $strParentAlias, $strAlias));
@@ -3280,6 +3318,7 @@
 	 * @property-read QQNode $PhoneMobile
 	 * @property-read QQNode $Fax
 	 * @property-read QQNode $Description
+	 * @property-read QQNode $ActiveFlag
 	 * @property-read QQNode $CreatedBy
 	 * @property-read QQNodeUserAccount $CreatedByObject
 	 * @property-read QQNode $CreationDate
@@ -3327,6 +3366,8 @@
 					return new QQNode('fax', 'Fax', 'string', $this);
 				case 'Description':
 					return new QQNode('description', 'Description', 'string', $this);
+				case 'ActiveFlag':
+					return new QQNode('active_flag', 'ActiveFlag', 'boolean', $this);
 				case 'CreatedBy':
 					return new QQNode('created_by', 'CreatedBy', 'integer', $this);
 				case 'CreatedByObject':
@@ -3380,6 +3421,7 @@
 	 * @property-read QQNode $PhoneMobile
 	 * @property-read QQNode $Fax
 	 * @property-read QQNode $Description
+	 * @property-read QQNode $ActiveFlag
 	 * @property-read QQNode $CreatedBy
 	 * @property-read QQNodeUserAccount $CreatedByObject
 	 * @property-read QQNode $CreationDate
@@ -3428,6 +3470,8 @@
 					return new QQNode('fax', 'Fax', 'string', $this);
 				case 'Description':
 					return new QQNode('description', 'Description', 'string', $this);
+				case 'ActiveFlag':
+					return new QQNode('active_flag', 'ActiveFlag', 'boolean', $this);
 				case 'CreatedBy':
 					return new QQNode('created_by', 'CreatedBy', 'integer', $this);
 				case 'CreatedByObject':

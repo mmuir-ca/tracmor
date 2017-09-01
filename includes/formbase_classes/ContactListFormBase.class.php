@@ -34,6 +34,7 @@
 		protected $colPhoneMobile;
 		protected $colFax;
 		protected $colDescription;
+		protected $colActiveFlag;
 		protected $colCreatedBy;
 		protected $colCreationDate;
 		protected $colModifiedBy;
@@ -57,6 +58,7 @@
 			$this->colPhoneMobile = new QDataGridColumn(QApplication::Translate('Phone Mobile'), '<?= QString::Truncate($_ITEM->PhoneMobile, 200); ?>', array('OrderByClause' => QQ::OrderBy(QQN::Contact()->PhoneMobile), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Contact()->PhoneMobile, false)));
 			$this->colFax = new QDataGridColumn(QApplication::Translate('Fax'), '<?= QString::Truncate($_ITEM->Fax, 200); ?>', array('OrderByClause' => QQ::OrderBy(QQN::Contact()->Fax), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Contact()->Fax, false)));
 			$this->colDescription = new QDataGridColumn(QApplication::Translate('Description'), '<?= QString::Truncate($_ITEM->Description, 200); ?>', array('OrderByClause' => QQ::OrderBy(QQN::Contact()->Description), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Contact()->Description, false)));
+			$this->colActiveFlag = new QDataGridColumn(QApplication::Translate('Active Flag'), '<?= ($_ITEM->ActiveFlag) ? "true" : "false" ?>', array('OrderByClause' => QQ::OrderBy(QQN::Contact()->ActiveFlag), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Contact()->ActiveFlag, false)));
 			$this->colCreatedBy = new QDataGridColumn(QApplication::Translate('Created By'), '<?= $_FORM->dtgContact_CreatedByObject_Render($_ITEM); ?>');
 			$this->colCreationDate = new QDataGridColumn(QApplication::Translate('Creation Date'), '<?= $_FORM->dtgContact_CreationDate_Render($_ITEM); ?>', array('OrderByClause' => QQ::OrderBy(QQN::Contact()->CreationDate), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Contact()->CreationDate, false)));
 			$this->colModifiedBy = new QDataGridColumn(QApplication::Translate('Modified By'), '<?= $_FORM->dtgContact_ModifiedByObject_Render($_ITEM); ?>');
@@ -94,6 +96,7 @@
 			$this->dtgContact->AddColumn($this->colPhoneMobile);
 			$this->dtgContact->AddColumn($this->colFax);
 			$this->dtgContact->AddColumn($this->colDescription);
+			$this->dtgContact->AddColumn($this->colActiveFlag);
 			$this->dtgContact->AddColumn($this->colCreatedBy);
 			$this->dtgContact->AddColumn($this->colCreationDate);
 			$this->dtgContact->AddColumn($this->colModifiedBy);

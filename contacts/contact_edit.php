@@ -67,6 +67,7 @@ class ContactEditForm extends ContactEditFormBase {
 	protected $lblEmail;
 	protected $pnlDescription;
 	protected $lblAddress;
+	protected $lblActiveFlag;
 	protected $lblPhoneOffice;
 	protected $lblPhoneMobile;
 	protected $lblPhoneHome;
@@ -121,6 +122,7 @@ class ContactEditForm extends ContactEditFormBase {
 		$this->lblEmail_Create();
 		$this->lblAddress_Create();
 		$this->pnlDescription_Create();
+		$this->lblActiveFlag_Create();
 		$this->lblPhoneOffice_Create();
 		$this->lblPhoneMobile_Create();
 		$this->lblPhoneHome_Create();
@@ -138,6 +140,7 @@ class ContactEditForm extends ContactEditFormBase {
 		$this->txtTitle_Create();
 		$this->txtEmail_Create();
 		$this->txtDescription_Create();
+		$this->chkActiveFlag_Create();
 		$this->txtPhoneOffice_Create();
 		$this->txtPhoneHome_Create();
 		$this->txtPhoneMobile_Create();
@@ -229,6 +232,12 @@ class ContactEditForm extends ContactEditFormBase {
 	protected function lblEmail_Create() {
 		$this->lblEmail = new QLabel($this);
 		$this->lblEmail->Name = 'Email';
+	}
+	
+	// Setup the Active Flag label
+	protected function lblActiveFlag_Create() {
+		$this->lblActiveFlag = new QLabel($this);
+		$this->lblActiveFlag->Name = 'Active Flag:';
 	}
 
 	// Setup the Description Panel
@@ -403,6 +412,14 @@ class ContactEditForm extends ContactEditFormBase {
 		$this->txtFax->AddAction(new QEnterKeyEvent(), new QAjaxAction('btnSave_Click'));
 		$this->txtFax->AddAction(new QEnterKeyEvent(), new QTerminateAction());
 		$this->txtFax->TabIndex = $this->intTabIndex++;
+	}
+	
+	// Create and Setup the ActiveFlag textbox
+	protected function chkActiveFlag_Create() {
+		parent::chkActiveFlag_Create();
+		$this->chkActiveFlag->CausesValidation = true;
+		$this->chkActiveFlag->AddAction(new QEnterKeyEvent(), new QAjaxAction('btnSave_Click'));
+		$this->chkActiveFlag->AddAction(new QEnterKeyEvent(), new QTerminateAction());
 	}
 
 	// Create and Setup Primary Address Input
@@ -715,6 +732,7 @@ class ContactEditForm extends ContactEditFormBase {
 		$this->objContact->PhoneOffice = $this->txtPhoneOffice->Text;
 		$this->objContact->PhoneMobile = $this->txtPhoneMobile->Text;
 		$this->objContact->PhoneHome = $this->txtPhoneHome->Text;
+		$this->objContact->ActiveFlag = $this->chkActiveFlag->Checked;
 		$this->objContact->Fax = $this->txtFax->Text;
 		}
 

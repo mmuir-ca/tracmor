@@ -55,6 +55,11 @@
 		public function __toStringWithLink($CssClass = null) {
 			return sprintf('<a href="../contacts/contact_edit.php?intContactId=%s" class="%s">%s</a>', $this->intContactId, $CssClass, $this->__toString());
 		}
+		
+		// Returns an <img> tag based on the boolean value (either a check or an X)
+		public function __toStringActiveFlag() {
+			return QApplication::BooleanImage($this->ActiveFlag);
+		}
 
 		// This adds the created by and creation date before saving a new contact
 		public function Save($blnForceInsert = false, $blnForceUpdate = false) {
@@ -240,6 +245,7 @@
 					`contact`.`phone_mobile` AS `phone_mobile`,
 					`contact`.`fax` AS `fax`,
 					`contact`.`description` AS `description`,
+					`contact`.`active_flag` AS `active_flag`,
 					`contact`.`created_by` AS `created_by`,
 					`contact`.`creation_date` AS `creation_date`,
 					`contact`.`modified_by` AS `modified_by`,
@@ -327,6 +333,7 @@
 					`contact`.`phone_mobile` AS `phone_mobile`,
 					`contact`.`fax` AS `fax`,
 					`contact`.`description` AS `description`,
+					`contact`.`active_flag` AS `active_flag`,
 					`contact`.`created_by` AS `created_by`,
 					`contact`.`creation_date` AS `creation_date`,
 					`contact`.`modified_by` AS `modified_by`,

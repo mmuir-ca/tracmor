@@ -35,6 +35,7 @@
 		protected $txtPhoneMobile;
 		protected $txtFax;
 		protected $txtDescription;
+		protected $chkActiveFlag;
 		protected $lstCreatedByObject;
 		protected $calCreationDate;
 		protected $lstModifiedByObject;
@@ -84,6 +85,7 @@
 			$this->txtPhoneMobile_Create();
 			$this->txtFax_Create();
 			$this->txtDescription_Create();
+			$this->chkActiveFlag_Create();
 			$this->lstCreatedByObject_Create();
 			$this->calCreationDate_Create();
 			$this->lstModifiedByObject_Create();
@@ -211,6 +213,13 @@
 			$this->txtDescription->Text = $this->objContact->Description;
 			$this->txtDescription->TextMode = QTextMode::MultiLine;
 		}
+		
+		// Create and Setup chkActiveFlag
+		protected function chkActiveFlag_Create() {
+			$this->chkActiveFlag = new QCheckBox($this);
+			$this->chkActiveFlag->Name = QApplication::Translate('Active Flag');
+			$this->chkActiveFlag->Checked = $this->objContact->ActiveFlag;
+		}
 
 		// Create and Setup lstCreatedByObject
 		protected function lstCreatedByObject_Create() {
@@ -317,6 +326,7 @@
 			$this->objContact->PhoneMobile = $this->txtPhoneMobile->Text;
 			$this->objContact->Fax = $this->txtFax->Text;
 			$this->objContact->Description = $this->txtDescription->Text;
+			$this->objContact->ActiveFlag = $this->chkActiveFlag->Checked;
 			$this->objContact->CreatedBy = $this->lstCreatedByObject->SelectedValue;
 			$this->objContact->CreationDate = $this->calCreationDate->DateTime;
 			$this->objContact->ModifiedBy = $this->lstModifiedByObject->SelectedValue;

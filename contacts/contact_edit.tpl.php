@@ -52,7 +52,8 @@
 			$arrContactFields[] = array('name' => 'Mobile Phone:', 'value' => $this->lblPhoneMobile->Render(false) . $this->txtPhoneMobile->RenderWithError(false));
 			$arrContactFields[] = array('name' => 'Fax:', 'value' => $this->lblFax->Render(false) . $this->txtFax->RenderWithError(false));
 			$arrContactFields[] = array('name' => 'Address:', 'value' => $this->lblAddress->Render(false) . $this->lstAddress->RenderWithError(false) . '&nbsp;' . $this->lblNewAddress->RenderWithError(false));
-		 
+		 	$arrContactFields[] = array('name' => 'ActiveFlag', 'value' => $this->lblActiveFlag->Render(false) . $this->chkActiveFlag->RenderWithError(false));
+			
 		if ($this->arrCustomFields) {
 			foreach ($this->arrCustomFields as $field) {
 				if(!$this->blnEditMode || $field['blnView']){

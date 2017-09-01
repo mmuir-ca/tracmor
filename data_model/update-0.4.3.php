@@ -22,6 +22,42 @@ try {
 	$strQuery = "ALTER TABLE `contact` ADD COLUMN `active_flag` BIT(1) NOT NULL DEFAULT b'0' AFTER `description`;";
 	$objDatabase->NonQuery($strQuery);
 	
+	
+	// Create sams log qtype table
+	$strQuery="
+    CREATE TABLE IF NOT EXISTS `sams_log_qtype` (
+      `log_qtype_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      `name` varchar(50) NOT NULL,
+      PRIMARY KEY (`log_qtype_id`),
+      UNIQUE KEY `name` (`name`),
+      UNIQUE KEY `log_qtype_id` (`log_qtype_id`)) 
+    ENGINE=InnoDB";
+	$objDatabase->NonQuery($strQuery);
+	
+	// Create sams_asset_log
+	
+	$strQuery="
+	CREATE TABLE IF NOT EXISTS `sams_asset_log` (
+      `asset_log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+      `asset_id` int(10) unsigned NOT NULL,
+      `created_by` int(10) unsigned NOT NULL,
+      `creation_date` datetime DEFAULT NULL,
+      `log_qtype_id` int(10) unsigned NOT NULL,
+      `note` text NOT NULL,
+      PRIMARY KEY (`asset_log_id`),
+      UNIQUE KEY `asset_log_id` (`asset_log_id`),
+      KEY `asset_transaction_fkindex1` (`asset_id`),
+      KEY `asset_transaction_fkindex2` (`log_qtype_id`),
+      KEY `asset_transaction_fkindex3` (`created_by`))  
+    ENGINE=InnoDB";
+	$objDatabase->NonQuery($strQuery);
+	// Insert log types into sams_log_qtype
+	$strQuery="
+    INSERT INTO `sams_log_qtype` (`log_qtype_id`, `name`) VALUES
+      (2, 'Quick Notes'),
+      (1, 'Repair Log');";
+	$objDatabase->NonQuery($strQuery);
+	
 	// Set version
 	$strQuery = "UPDATE `_version` SET `version`='0.4.3';";
 	$objDatabase->NonQuery($strQuery);

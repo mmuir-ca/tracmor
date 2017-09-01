@@ -148,7 +148,7 @@
 				$this->txtEmailAddress->AddAction(new QEnterKeyEvent(), new QTerminateAction());
 		}
 
-		// Create and Setup the Username textbox
+		// Create and Setup the ActiveFlag textbox
 		protected function chkActiveFlag_Create() {
 			parent::chkActiveFlag_Create();
 			$this->chkActiveFlag->CausesValidation = true;
