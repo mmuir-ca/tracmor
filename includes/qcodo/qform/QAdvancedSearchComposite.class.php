@@ -244,8 +244,10 @@ class QAdvancedSearchComposite extends QControl {
 					$this->lstToContact->AddItem('Any', 'any_' . $objCompany->CompanyId);
 					if ($objToContactArray) {
 						foreach ($objToContactArray as $objToContact) {
-							$objListItem = new QListItem($objToContact->__toString(), $objToContact->ContactId);
-							$this->lstToContact->AddItem($objListItem);
+							if ($objToContact->ActiveFlag){
+								$objListItem = new QListItem($objToContact->__toString(), $objToContact->ContactId);
+								$this->lstToContact->AddItem($objListItem);
+							}
 						}
 						//$this->lstToContact->Enabled = true;
 					}

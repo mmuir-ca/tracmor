@@ -209,10 +209,12 @@
 				$this->lstToContact->AddItem(QApplication::Translate('- Select One -'), null);
 			$objToContactArray = Contact::LoadAll();
 			if ($objToContactArray) foreach ($objToContactArray as $objToContact) {
-				$objListItem = new QListItem($objToContact->__toString(), $objToContact->ContactId);
-				if (($this->objShipment->ToContact) && ($this->objShipment->ToContact->ContactId == $objToContact->ContactId))
-					$objListItem->Selected = true;
-				$this->lstToContact->AddItem($objListItem);
+				if ($objToContact->ActiveFlag){
+					$objListItem = new QListItem($objToContact->__toString(), $objToContact->ContactId);
+					if (($this->objShipment->ToContact) && ($this->objShipment->ToContact->ContactId == $objToContact->ContactId))
+						$objListItem->Selected = true;
+					$this->lstToContact->AddItem($objListItem);
+				}
 			}
 		}
 

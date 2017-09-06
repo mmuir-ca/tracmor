@@ -327,7 +327,8 @@
 			$this->dtgContact->AddColumn(new QDataGridColumnExt('Company', '<?= $_ITEM->Company->__toStringWithLink("bluelink") ?>', 'SortByCommand="contact__company_id__short_description ASC"', 'ReverseSortByCommand="contact__company_id__short_description DESC"', 'CssClass="dtg_column"', 'HtmlEntities=false'));
 			$this->dtgContact->AddColumn(new QDataGridColumnExt('Email', '<?= $_ITEM->Email ?>', 'SortByCommand="email ASC"', 'ReverseSortByCommand="email DESC"', 'CssClass="dtg_column"'));
 			$this->dtgContact->AddColumn(new QDataGridColumnExt('Address', '<?= ($_ITEM->Address instanceof Address) ? $_ITEM->Address->__toStringWithLink("bluelink") : "" ?>', 'SortByCommand="contact__address_id__short_description ASC"', 'ReverseSortByCommand="contact__address_id__short_description DESC"', 'CssClass="dtg_column"', 'HtmlEntities=false'));
-
+			$this->dtgContact->AddColumn(new QDataGridColumnExt('Active', '<?= $_ITEM->__toStringActiveFlag() ?>',array(),'CssClass="dtg_column"', 'HtmlEntities=false'));
+			
 			// Add the custom field columns with Display set to false. These can be shown by using the column toggle menu.
 			$objCustomFieldArray = CustomField::LoadObjCustomFieldArray(8, false);
 			if ($objCustomFieldArray) {

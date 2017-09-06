@@ -572,10 +572,12 @@ class ReceiptEditForm extends ReceiptEditFormBase {
 		$objToContactArray = Contact::LoadArrayByCompanyId ( QApplication::$TracmorSettings->CompanyId, QQ::Clause ( QQ::OrderBy ( QQN::Contact ()->LastName, QQN::Contact ()->FirstName ) ) );
 		if ($objToContactArray)
 			foreach ( $objToContactArray as $objToContact ) {
-				$objListItem = new QListItem ( $objToContact->__toString (), $objToContact->ContactId );
-				if (($this->objReceipt->ToContact) && ($this->objReceipt->ToContact->ContactId == $objToContact->ContactId))
-					$objListItem->Selected = true;
-				$this->lstToContact->AddItem ( $objListItem );
+				if ($objToContact->ActiveFlag){
+					$objListItem = new QListItem ( $objToContact->__toString (), $objToContact->ContactId );
+					if (($this->objReceipt->ToContact) && ($this->objReceipt->ToContact->ContactId == $objToContact->ContactId))
+						$objListItem->Selected = true;
+					$this->lstToContact->AddItem ( $objListItem );
+				}
 			}
 		$this->lstToContact->TabIndex = 3;
 		$this->intNextTabIndex ++;

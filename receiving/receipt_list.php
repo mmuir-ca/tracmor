@@ -687,10 +687,12 @@
                                                                           );
                         $this->pnlReceiptMassEdit->lstToContact->RemoveAllItems();
                         if ($objToContactArray) {
-                            foreach ($objToContactArray as $objToContact) {
-                                $objListItem = new QListItem($objToContact->__toString(),
+                        	foreach ($objToContactArray as $objToContact) {
+                        		if ($objToContact->ActiveFlag){
+                                	$objListItem = new QListItem($objToContact->__toString(),
                                                              $objToContact->ContactId);
-                                $this->pnlReceiptMassEdit->lstToContact->AddItem($objListItem);
+                                	$this->pnlReceiptMassEdit->lstToContact->AddItem($objListItem);
+                        		}
                             }
                             $this->pnlReceiptMassEdit->lstToContact->Enabled = true;
                         }

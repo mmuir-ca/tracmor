@@ -651,10 +651,12 @@
                         );
                         $this->pnlShipmentMassEdit->lstToContact->RemoveAllItems();
                         if ($objToContactArray) {
-                            foreach ($objToContactArray as $objToContact) {
-                                $objListItem = new QListItem($objToContact->__toString(),
-                                    $objToContact->ContactId);
-                                $this->pnlShipmentMassEdit->lstToContact->AddItem($objListItem);
+                        	foreach ($objToContactArray as $objToContact) {
+                        		if ($objToContact->ActiveFlag){
+                        			$objListItem = new QListItem($objToContact->__toString(), $objToContact->ContactId);
+                                	$this->pnlShipmentMassEdit->lstToContact->AddItem($objListItem);
+                        		}
+                                
                             }
                             $this->pnlShipmentMassEdit->lstToContact->Enabled = true;
                         }

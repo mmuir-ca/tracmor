@@ -858,10 +858,12 @@ elseif ($intDayOfWeek == 6) {
 			$objToContactArray = Contact::LoadAll ( QQ::Clause ( QQ::OrderBy ( QQN::Contact ()->LastName ), QQ::OrderBy ( QQN::Contact ()->FirstName ) ) );
 			if ($objToContactArray)
 				foreach ( $objToContactArray as $objToContact ) {
-					$objListItem = new QListItem ( $objToContact->__toString (), $objToContact->ContactId );
-					if (($this->objShipment->ToContactId) && ($this->objShipment->ToContactId == $objToContact->ContactId))
-						$objListItem->Selected = true;
-					$this->lstToContact->AddItem ( $objListItem );
+					if ($objToContact->ActiveFlag){
+						$objListItem = new QListItem ( $objToContact->__toString (), $objToContact->ContactId );
+						if (($this->objShipment->ToContactId) && ($this->objShipment->ToContactId == $objToContact->ContactId))
+							$objListItem->Selected = true;
+						$this->lstToContact->AddItem ( $objListItem );
+					}
 				}
 		}
 		
@@ -1527,11 +1529,13 @@ elseif ($intDayOfWeek == 6) {
 					$this->lstToContact->AddItem ( '- Select One -', null );
 					if ($objToContactArray) {
 						foreach ( $objToContactArray as $objToContact ) {
-							$objListItem = new QListItem ( $objToContact->__toString (), $objToContact->ContactId );
-							if ($SelectedContactId == $objToContact->ContactId) {
-								$objListItem->Selected = true;
+							if ($objToContact->ActiveFlag){
+								$objListItem = new QListItem ( $objToContact->__toString (), $objToContact->ContactId );
+								if ($SelectedContactId == $objToContact->ContactId) {
+									$objListItem->Selected = true;
+								}
+								$this->lstToContact->AddItem ( $objListItem );
 							}
-							$this->lstToContact->AddItem ( $objListItem );
 						}
 						$this->lstToContact->Enabled = true;
 					}
