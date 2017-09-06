@@ -229,7 +229,9 @@ class QAssetTransactComposite extends QControl {
 		$this->lstUser->AddItem('- Select One -', null);
 
 		foreach (UserAccount::LoadAll(QQ::Clause(QQ::OrderBy(QQN::UserAccount()->Username))) as $objUser) {
-			$this->lstUser->AddItem(sprintf("%s", $objUser->Username), $objUser->UserAccountId);
+			if ($objUser->ActiveFlag) {
+				$this->lstUser->AddItem(sprintf("%s", $objUser->Username), $objUser->UserAccountId);
+			}
 		}
 
 		$this->lstCheckOutTo_Select();
@@ -322,8 +324,10 @@ class QAssetTransactComposite extends QControl {
 					$this->lstToContact->AddItem('- Select One -', null);
 					if ($objToContactArray) {
 						foreach ($objToContactArray as $objToContact) {
-							$objListItem = new QListItem($objToContact->__toString(), $objToContact->ContactId);
-							$this->lstToContact->AddItem($objListItem);
+							if ($objToContact->ActiveFlag){
+								$objListItem = new QListItem($objToContact->__toString(), $objToContact->ContactId);
+								$this->lstToContact->AddItem($objListItem);
+							}
 						}
 						$this->lstToContact->Enabled = true;
 					}

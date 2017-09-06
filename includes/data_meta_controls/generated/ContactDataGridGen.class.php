@@ -307,6 +307,7 @@
 				case 'PhoneMobile': return QQN::Contact()->PhoneMobile;
 				case 'Fax': return QQN::Contact()->Fax;
 				case 'Description': return QQN::Contact()->Description;
+				case 'ActiveFlag': return QQN::Contact()->ActiveFlag;
 				case 'CreatedBy': return QQN::Contact()->CreatedBy;
 				case 'CreatedByObject': return QQN::Contact()->CreatedByObject;
 				case 'CreationDate': return QQN::Contact()->CreationDate;

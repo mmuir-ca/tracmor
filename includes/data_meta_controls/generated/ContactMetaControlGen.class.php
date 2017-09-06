@@ -40,6 +40,8 @@
 	 * property-read QLabel $FaxLabel
 	 * property QTextBox $DescriptionControl
 	 * property-read QLabel $DescriptionLabel
+	 * property QCheckBox $ActiveFlagControl
+	 * property-read QLabel $ActiveFlagLabel
 	 * property QListBox $CreatedByControl
 	 * property-read QLabel $CreatedByLabel
 	 * property QDateTimePicker $CreationDateControl
@@ -154,6 +156,12 @@
 		protected $txtDescription;
 
         /**
+         * @var QCheckBox chkActiveFlag;
+         * @access protected
+         */
+		protected $chkActiveFlag;
+
+        /**
          * @var QListBox lstCreatedByObject;
          * @access protected
          */
@@ -244,6 +252,12 @@
          * @access protected
          */
 		protected $lblDescription;
+
+        /**
+         * @var QLabel lblActiveFlag
+         * @access protected
+         */
+		protected $lblActiveFlag;
 
         /**
          * @var QLabel lblCreatedBy
@@ -699,6 +713,30 @@
 		}
 
 		/**
+		 * Create and setup QCheckBox chkActiveFlag
+		 * @param string $strControlId optional ControlId to use
+		 * @return QCheckBox
+		 */
+		public function chkActiveFlag_Create($strControlId = null) {
+			$this->chkActiveFlag = new QCheckBox($this->objParentObject, $strControlId);
+			$this->chkActiveFlag->Name = QApplication::Translate('Active Flag');
+			$this->chkActiveFlag->Checked = $this->objContact->ActiveFlag;
+			return $this->chkActiveFlag;
+		}
+
+		/**
+		 * Create and setup QLabel lblActiveFlag
+		 * @param string $strControlId optional ControlId to use
+		 * @return QLabel
+		 */
+		public function lblActiveFlag_Create($strControlId = null) {
+			$this->lblActiveFlag = new QLabel($this->objParentObject, $strControlId);
+			$this->lblActiveFlag->Name = QApplication::Translate('Active Flag');
+			$this->lblActiveFlag->Text = ($this->objContact->ActiveFlag) ? QApplication::Translate('Yes') : QApplication::Translate('No');
+			return $this->lblActiveFlag;
+		}
+
+		/**
 		 * Create and setup QListBox lstCreatedByObject
 		 * @param string $strControlId optional ControlId to use
 		 * @param QQCondition $objConditions override the default condition of QQ::All() to the query, itself
@@ -933,6 +971,9 @@
 			if ($this->txtDescription) $this->txtDescription->Text = $this->objContact->Description;
 			if ($this->lblDescription) $this->lblDescription->Text = $this->objContact->Description;
 
+			if ($this->chkActiveFlag) $this->chkActiveFlag->Checked = $this->objContact->ActiveFlag;
+			if ($this->lblActiveFlag) $this->lblActiveFlag->Text = ($this->objContact->ActiveFlag) ? QApplication::Translate('Yes') : QApplication::Translate('No');
+
 			if ($this->lstCreatedByObject) {
 					$this->lstCreatedByObject->RemoveAllItems();
 				$this->lstCreatedByObject->AddItem(QApplication::Translate('- Select One -'), null);
@@ -1016,6 +1057,7 @@
 				if ($this->txtPhoneMobile) $this->objContact->PhoneMobile = $this->txtPhoneMobile->Text;
 				if ($this->txtFax) $this->objContact->Fax = $this->txtFax->Text;
 				if ($this->txtDescription) $this->objContact->Description = $this->txtDescription->Text;
+				if ($this->chkActiveFlag) $this->objContact->ActiveFlag = $this->chkActiveFlag->Checked;
 				if ($this->lstCreatedByObject) $this->objContact->CreatedBy = $this->lstCreatedByObject->SelectedValue;
 				if ($this->calCreationDate) $this->objContact->CreationDate = $this->calCreationDate->DateTime;
 				if ($this->lstModifiedByObject) $this->objContact->ModifiedBy = $this->lstModifiedByObject->SelectedValue;
@@ -1134,6 +1176,12 @@
 				case 'DescriptionLabel':
 					if (!$this->lblDescription) return $this->lblDescription_Create();
 					return $this->lblDescription;
+				case 'ActiveFlagControl':
+					if (!$this->chkActiveFlag) return $this->chkActiveFlag_Create();
+					return $this->chkActiveFlag;
+				case 'ActiveFlagLabel':
+					if (!$this->lblActiveFlag) return $this->lblActiveFlag_Create();
+					return $this->lblActiveFlag;
 				case 'CreatedByControl':
 					if (!$this->lstCreatedByObject) return $this->lstCreatedByObject_Create();
 					return $this->lstCreatedByObject;
@@ -1210,6 +1258,8 @@
 						return ($this->txtFax = QType::Cast($mixValue, 'QControl'));
 					case 'DescriptionControl':
 						return ($this->txtDescription = QType::Cast($mixValue, 'QControl'));
+					case 'ActiveFlagControl':
+						return ($this->chkActiveFlag = QType::Cast($mixValue, 'QControl'));
 					case 'CreatedByControl':
 						return ($this->lstCreatedByObject = QType::Cast($mixValue, 'QControl'));
 					case 'CreationDateControl':
