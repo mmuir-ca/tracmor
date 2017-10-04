@@ -128,6 +128,7 @@ class CommercialInvoiceForm extends QForm {
 			->mergeCells ( 'D2:J2' )
 			->setCellValue ( 'D2', "EXPORT REFERENCES (i.e. order no, invoice no, etc)" )
 			->mergeCells ( 'D3:J3' )
+			->setCellValue ( 'D3', $shipment->ShipmentNumber)
 			->mergeCells ( 'K2:L2' )
 			->setCellValue ( 'K2', "PAGE OF   PAGES" )
 			->mergeCells ( 'K3:L3' )
