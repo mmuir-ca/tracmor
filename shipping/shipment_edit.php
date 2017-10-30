@@ -768,10 +768,12 @@ elseif ($intDayOfWeek == 6) {
 		$objFromContactArray = Contact::LoadArrayByCompanyId ( $intCompanyId, QQ::Clause ( QQ::OrderBy ( QQN::Contact ()->LastName, QQN::Contact ()->FirstName ) ) );
 		if ($objFromContactArray)
 			foreach ( $objFromContactArray as $objFromContact ) {
-				$objListItem = new QListItem ( $objFromContact->__toString (), $objFromContact->ContactId );
-				if (($this->objShipment->FromContactId) && ($this->objShipment->FromContactId == $objFromContact->ContactId))
-					$objListItem->Selected = true;
-				$this->lstFromContact->AddItem ( $objListItem );
+				if($objFromContact->ActiveFlag) {
+					$objListItem = new QListItem ( $objFromContact->__toString (), $objFromContact->ContactId );
+					if (($this->objShipment->FromContactId) && ($this->objShipment->FromContactId == $objFromContact->ContactId))
+						$objListItem->Selected = true;
+					$this->lstFromContact->AddItem ( $objListItem );
+				}
 			}
 		$this->lstFromContact->AddAction ( new QChangeEvent (), new QAjaxAction ( 'lstFromContact_Select' ) );
 		$this->lstFromContact->TabIndex = 2;
@@ -1459,11 +1461,13 @@ elseif ($intDayOfWeek == 6) {
 					$this->lstFromContact->AddItem ( '- Select One -', null );
 					if ($objFromContactArray) {
 						foreach ( $objFromContactArray as $objFromContact ) {
-							$objListItem = new QListItem ( $objFromContact->__toString (), $objFromContact->ContactId );
-							if ($SelectedContactId == $objFromContact->ContactId) {
-								$objListItem->Selected = true;
+							if ($objFromContact->ActiveFlag){
+									$objListItem = new QListItem ( $objFromContact->__toString (), $objFromContact->ContactId );
+									if ($SelectedContactId == $objFromContact->ContactId) {
+										$objListItem->Selected = true;
+									}
+									$this->lstFromContact->AddItem ( $objListItem );
 							}
-							$this->lstFromContact->AddItem ( $objListItem );
 						}
 						$this->lstFromContact->Enabled = true;
 					}
