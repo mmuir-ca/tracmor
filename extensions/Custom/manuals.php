@@ -4,7 +4,7 @@
  */
 
 require_once ('../../includes/prepend.inc.php');
-QApplication::Authenticate( 5 );
+#QApplication::Authenticate( 5 );
 
 /** Error reporting */
 error_reporting(E_ALL);
@@ -18,7 +18,79 @@ if (PHP_SAPI == 'cli')
 	/** Include PHPExcel */
 require_once dirname(__FILE__) . '../../Classes/PHPExcel.php';
 
-function attachmentSort($a, $b){
+function categorySort($a, $b){
+	
+	
+	$aM = ""; $aC = ""; $bM = ""; $bC = "";
+	switch($a->EntityQtypeId){
+		case 1:
+			$asset = Asset::Load($a->EntityId);
+			if ($asset){
+				$assetModel = AssetModel::Load($asset->AssetModelId);
+				$aM = Manufacturer::Load($assetModel->ManufacturerId)->ShortDescription;
+				$aC = Category::Load($assetModel->CategoryId)->ShortDescription;
+			}
+			break;
+		case 2:
+			$inventory = InventoryModel::Load($a->EntityId);
+			if ($inventory){
+				$aM = Manufacturer::Load($inventory->ManufacturerId)->ShortDescription;
+				$aC = Category::Load($inventory->CategoryId)->ShortDescription;
+			}
+			break;
+		case 4:
+			$assetModelA = AssetModel::Load($a->EntityId);
+			if ($assetModelA){
+				$aM = Manufacturer::Load($assetModelA->ManufacturerId)->ShortDescription;
+				$aC = Category::Load($assetModelA->CategoryId)->ShortDescription;
+			}
+			break;
+		default:
+			return -1;
+	}
+	switch($b->EntityQtypeId){
+		case 1:
+			$assetB = Asset::Load($b->EntityId);
+			if ($assetB){
+				$assetBModel = AssetModel::Load($assetB->AssetModelId);
+				$bM = Manufacturer::Load($assetBModel->ManufacturerId)->ShortDescription;
+				$bC = Category::Load($assetBModel->CategoryId)->ShortDescription;
+			}
+			break;
+		case 2:
+			$inventoryB = InventoryModel::Load($b->EntityId);
+			if ($inventoryB){
+				$bM = Manufacturer::Load($inventoryB->ManufacturerId)->ShortDescription;
+				$bC = Category::Load($inventoryB->CategoryId)->ShortDescription;
+			}
+			break;
+		case 4:
+			$assetModelB = AssetModel::Load($b->EntityId);
+			if ($assetModelB) {
+				$bM = Manufacturer::Load($assetModelB->ManufacturerId)->ShortDescription;
+				$bC = Category::Load($assetModelB->CategoryId)->ShortDescription;
+			}
+			break;
+		default:
+			return -1;
+	}
+	if ($aC < $bC) {
+		return -1;
+	}
+	if ($aC > $bC) {
+		return 1;
+	}
+	if ($aM < $bM) {
+		return -1;
+	}
+	if ($aM > $bM) {
+		return 1;
+	}
+	return 0;
+	
+}
+
+function manufactureSort($a, $b){
 
 	$aM = ""; $aC = ""; $bM = ""; $bC = "";
 	switch($a->EntityQtypeId){
@@ -102,16 +174,25 @@ $objPHPExcel->getProperties()->setCreator("PHPOffice")
 	->setCategory("Manual List");
 	
 	
-	// Add some data
+$row = 1;
+// Add date
+
 $objPHPExcel->setActiveSheetIndex(0)
-	->setCellValue( 'A1', 'Manufacturer')
-	->setCellValue( 'B1', 'Category')
-	->setCellValue( 'C1', 'Model')
-	->setCellValue( 'D1', 'Filename');
-	
-	$row = 2;
+	->setCellValue( 'A'.$row, 'Manual List')
+	->setCellValue( 'B'.$row, 'last updated on:')
+	->setCellValue( 'C'.$row, PHPExcel_Shared_Date::PHPToExcel( gmmktime(0,0,0,date('m'),date('d'),date('Y')) ))
+	->getStyle('C'.$row)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_XLSX15);
+$row+=2;
+// Add some data
+$objPHPExcel->setActiveSheetIndex(0)
+	->setCellValue( 'A'.$row, 'Manufacturer')
+	->setCellValue( 'B'.$row, 'Category')
+	->setCellValue( 'C'.$row, 'Model')
+	->setCellValue( 'D'.$row, 'Filename')
+	->getStyle ( 'A'.$row.':D'.$row )-> getFont ()->setBold(true)->setSize(18);
+$row++;
 	if ($objAttachments){
-		usort($objAttachments, 'attachmentSort');
+		usort($objAttachments, 'manufactureSort');
 		foreach($objAttachments as $item){
 			$entityQtype = $item->EntityQtypeId;
 			switch ($entityQtype){
@@ -170,11 +251,82 @@ $objPHPExcel->setActiveSheetIndex(0)
 			
 			$row++;
 		}
+		
+		$row+=3;
+		
+		$objPHPExcel->setActiveSheetIndex(0)
+			->setCellValue( 'A'.$row, 'Manufacturer')
+			->setCellValue( 'B'.$row, 'Category')
+			->setCellValue( 'C'.$row, 'Model')
+			->setCellValue( 'D'.$row, 'Filename')
+			->getStyle ( 'A'.$row.':D'.$row )-> getFont ()->setBold(true)->setSize(18);
+		$row++;
+		
+		usort($objAttachments, 'categorySort');
+		foreach($objAttachments as $item){
+			$entityQtype = $item->EntityQtypeId;
+			switch ($entityQtype){
+				case 1: //Asset
+					$asset = Asset::Load($item->EntityId);
+					if ($asset){
+						$assetModel = AssetModel::Load($asset->AssetModelId);
+						$manu = Manufacturer::Load($assetModel->ManufacturerId);
+						$cat = Category::Load($assetModel->CategoryId);
+						$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue( 'A'.$row , $manu->ShortDescription)
+						->setCellValue( 'B'.$row , $cat->ShortDescription)
+						->setCellValue( 'C'.$row , $asset->AssetModel);
+					}
+					break;
+				case 2: //Inventory
+					$inventory = InventoryModel::Load($item->EntityId);
+					$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue( 'C'.$row , $inventory);
+					if ($inventory){
+						$manu = Manufacturer::Load($inventory->ManufacturerId);
+						$cat = Category::Load($inventory->CategoryId);
+						$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue( 'A'.$row , $manu->ShortDescription)
+						->setCellValue( 'B'.$row , $cat->ShortDescription);
+					}
+					break;
+				case 4: //AssetModel
+					$assetModel = AssetModel::Load($item->EntityId);
+					if ($assetModel){
+						$manu = Manufacturer::Load($assetModel->ManufacturerId);
+						$cat = Category::Load($assetModel->CategoryId);
+						$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue( 'A'.$row , $manu->ShortDescription)
+						->setCellValue( 'B'.$row , $cat->ShortDescription)
+						->setCellValue( 'C'.$row , $assetModel);
+					}
+					
+					break;
+				default:
+					break;
+			}
+			
+			
+			$objPHPExcel->getActiveSheet()
+			->setCellValue('D'.$row, $item->Filename);
+			$objPHPExcel->getActiveSheet()
+			->getCell('D'.$row)->getHyperlink()->setUrl('./attachments/'.$item->TmpFilename);
+			if ($row % 2  == 0){
+				$objPHPExcel->getActiveSheet()->getStyle( 'A'.$row.':D'.$row)
+				->getFill()
+				->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+				->getStartColor()
+				->setARGB('FFF0F8FF');
+			}
+			
+			$row++;
+		}
+		
 	}
 	$sheet = $objPHPExcel->getActiveSheet ();
 	$sheet->getStyle ( 'A1:D1' )-> getFont ()->setBold(true)->setSize(18);
-	$sheet->getStyle ( 'A1:D'.$row )-> getFont ()->setSize(14);
-	$sheet->getStyle ( 'D1:D'.$row )-> getFont ()->setBold(true);
+	$sheet->getStyle ( 'A4:D'.$row )-> getFont ()->setSize(14);
+	$sheet->getStyle ( 'D4:D'.$row )-> getFont ()->setBold(true);
 	$sheet->getColumnDimension ( 'A' )->setAutoSize ( true );
 	$sheet->getColumnDimension ( 'B' )->setAutoSize ( true );
 	$sheet->getColumnDimension ( 'C' )->setAutoSize ( true );
