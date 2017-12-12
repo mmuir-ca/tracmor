@@ -1,6 +1,25 @@
 <?php
 /**
- *
+ * This script allows an autonomous program to pull the 
+ * manuals associated with various assets, asset models or
+ * inventory items. It generates a webpage that links these
+ * items to the manual found in a subfolder called attachments
+ * 
+ * Since this is being run on an internal service, and no 
+ * variables are able to be passed in, the authentication 
+ * has been turned off to make it easier for a script to 
+ * pull data.
+ * 
+ * We transfer this file (and the associated manuals) to google drive
+ * where we can pull the files to all android tablets going to 
+ * the field using the following steps:
+ * 
+ * cd ~/gdrive
+ * drive pull
+ * sudo rsync -av --delete sysadmin@beta:/var/www/SJVfiles/sj_manuals/ ~/gdrive/Manuals/
+ * drive push
+ * 
+ * This assumes that we use https://github.com/odeke-em/drive to sync.
  */
 
 require_once ('../../includes/prepend.inc.php');
