@@ -2328,7 +2328,7 @@ elseif ($lstAdvanced->SelectedValue == 2) {
 				}
 				
 				// Create receipt transaction for internal shipment
-				if ($this->objShipment->ToCompanyId == $this->objShipment->FromCompanyId) {
+				//if ($this->objShipment->ToCompanyId == $this->objShipment->FromCompanyId) {
 					$this->receiveInternalShipmentTransaction = new Transaction ();
 					$this->receiveInternalShipmentTransaction->EntityQtypeId = $intEntityQtypeId;
 					$this->receiveInternalShipmentTransaction->TransactionTypeId = 7;
@@ -2348,7 +2348,7 @@ elseif ($lstAdvanced->SelectedValue == 2) {
 					$objInternalReceipt->ReceiptNumber = $this->objShipment->ShipmentNumber . '-Rc';
 					// $objInternalReceipt->ReceiptNumber = Receipt::LoadNewReceiptNumber();
 					$objInternalReceipt->Save ();
-				}
+				//}
 				
 				if ($intEntityQtypeId == EntityQtype::AssetInventory || $intEntityQtypeId == EntityQtype::Asset) {
 					
@@ -2479,7 +2479,7 @@ else {
 								// Set the Receipt Asset Transaction as child of the Shipment Asset Transaction
 								$objAssetTransaction->AssociateChildAssetTransaction ( $objReceiptAssetTransaction );
 							}
-							if (($this->objShipment->ToCompanyId == $this->objShipment->FromCompanyId) && ! $objAssetTransaction->Asset->LinkedFlag) {
+							if (/*($this->objShipment->ToCompanyId == $this->objShipment->FromCompanyId) && */! $objAssetTransaction->Asset->LinkedFlag) {
 								$objReceiptAssetTransaction = new AssetTransaction ();
 								$objReceiptAssetTransaction->AssetId = $objAssetTransaction->AssetId;
 								$objReceiptAssetTransaction->TransactionId = $this->receiveInternalShipmentTransaction->TransactionId;
@@ -2526,7 +2526,7 @@ else {
 						$objInventoryTransaction->Save ();
 						
 						// Add Inventory to receipt if this is an internal shipment
-						if ($this->objShipment->ToCompanyId == $this->objShipment->FromCompanyId) {
+						//if ($this->objShipment->ToCompanyId == $this->objShipment->FromCompanyId) {
 							$objReceiptInventoryLocation = InventoryLocation::LoadByLocationIdInventoryModelId ( 5, $objInventoryTransaction->InventoryLocation->InventoryModelId );
 							if (! $objReceiptInventoryLocation) {
 								// First create the inventory location if it doesn't exist
@@ -2547,7 +2547,7 @@ else {
 							$objReceiptInventoryTransaction->Quantity = $objInventoryTransaction->Quantity;
 							$objReceiptInventoryTransaction->SourceLocationId = 5;
 							$objReceiptInventoryTransaction->Save ();
-						}
+						//}
 					}
 				}
 				
