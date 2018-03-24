@@ -102,6 +102,7 @@ class QAssetSearchToolComposite extends QControl {
     $this->dlgAssetSearchTool->Overflow = QOverflow::Auto;
     $this->dlgAssetSearchTool->Padding = '10px';
     $this->dlgAssetSearchTool->BackColor = '#ffffff';
+    $this->dlgAssetSearchTool->MatteClickable = false;
     // Make sure this Dialog Box is "hidden"
     $this->dlgAssetSearchTool->Display = false;
     $this->dlgAssetSearchTool->CssClass = 'modal_dialog';

@@ -98,6 +98,7 @@ class QInventorySearchToolComposite extends QControl {
     $this->dlgInventorySearchTool->Overflow = QOverflow::Auto;
     $this->dlgInventorySearchTool->Padding = '10px';
     $this->dlgInventorySearchTool->BackColor = '#ffffff';
+    $this->dlgInventorySearchTool->MatteClickable = false;
     // Make sure this Dialog Box is "hidden"
     $this->dlgInventorySearchTool->Display = false;
     $this->dlgInventorySearchTool->CssClass = 'modal_dialog';
