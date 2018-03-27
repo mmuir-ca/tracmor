@@ -443,7 +443,8 @@
       // Enable Pagination, and set to 20 items per page
       $objPaginator = new QPaginator($this->dtgAssetModels);
       $this->dtgAssetModels->Paginator = $objPaginator;
-      $this->dtgAssetModels->ItemsPerPage = 20;
+      $this->dtgAssetModels->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+      $this->dtgCustomField->PaginatorAlternate = new QPaginator($this->dtgCustomField);
 
       $this->dtgAssetModels->AddColumn(new QDataGridColumn('Model', '<?= $_ITEM->AssetModel->__toStringWithLink($_ITEM,"bluelink"); ?>', array('CssClass' => "dtg_column" , 'HtmlEntities'=>false)));
       $this->dtgAssetModels->AddColumn(new QDataGridColumn('Action', '<?= $_FORM->RemoveAssetModelsColumn_Render($_ITEM) ?>', array('CssClass' => "dtg_column", 'HtmlEntities' => false)));
@@ -526,7 +527,7 @@
 			// Enable Pagination, and set to 20 items per page
 			$objPaginator = new QPaginator($this->dtgValue);
 			$this->dtgValue->Paginator = $objPaginator;
-			$this->dtgValue->ItemsPerPage = 20;
+			$this->dtgValue->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
 
 			$this->dtgValue->AddColumn(new QDataGridColumn('Option', '<?= $_ITEM->__toString() ?>', array('OrderByClause' => QQ::OrderBy(QQN::CustomFieldValue()->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::CustomFieldValue()->ShortDescription, false), 'CssClass' => "dtg_column")));
 			$this->dtgValue->AddColumn(new QDataGridColumn('Created By', '<?= $_ITEM->CreatedByObject->__toStringFullName() ?>', array('OrderByClause' => QQ::OrderBy(QQN::CustomFieldValue()->CreatedByObject->LastName, false, QQN::CustomFieldValue()->CreatedByObject->FirstName, false), 'ReverseOrderByClause' => QQ::OrderBy(QQN::CustomFieldValue()->CreatedByObject->LastName, QQN::CustomFieldValue()->CreatedByObject->FirstName), 'CssClass' => "dtg_column")));

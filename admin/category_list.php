@@ -159,6 +159,7 @@
       $objPaginator = new QPaginator($this->dtgCategory);
       $this->dtgCategory->Paginator = $objPaginator;
       $this->dtgCategory->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+      $this->dtgCategory->PaginatorAlternate = new QPaginator($this->dtgCategory);
       $this->dtgCategory->ShowExportCsv = true;
 
       $this->dtgCategory->AddColumn(new QDataGridColumnExt('ID', '<?= $_ITEM->CategoryId ?>', array('OrderByClause' => QQ::OrderBy(QQN::Category()->CategoryId), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Category()->CategoryId, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));

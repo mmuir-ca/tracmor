@@ -303,6 +303,7 @@
       $objPaginator = new QPaginator($this->dtgReceipt);
       $this->dtgReceipt->Paginator = $objPaginator;
       $this->dtgReceipt->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+      $this->dtgReceipt->PaginatorAlternate = new QPaginator($this->dtgReceipt);
 	  // Add column with checkBoxes to perform MassActions
 	 /* $this->dtgReceipt->AddColumn(new QDataGridColumnExt('<?= $_CONTROL->chkSelectAll_Render() ?>', '<?=$_CONTROL->chkSelected_Render($_ITEM->ReceiptId) ?>', 'CssClass="dtg_column"', 'HtmlEntities=false'));*/
       $this->dtgReceipt->AddColumn(new QDataGridColumnExt('<img src=../images/icons/attachment_gray.gif border=0 title=Attachments alt=Attachments>', '<?= Attachment::toStringIcon($_ITEM->GetVirtualAttribute(\'attachment_count\')); ?>', 'SortByCommand="__attachment_count ASC"', 'ReverseSortByCommand="__attachment_count DESC"', 'CssClass="dtg_column"', 'HtmlEntities="false"'));

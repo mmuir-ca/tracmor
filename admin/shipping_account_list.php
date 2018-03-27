@@ -181,7 +181,7 @@
 			// Enable Pagination, and set to 10 items per page
 			$objPaginator = new QPaginator($this->dtgCourier);
 			$this->dtgCourier->Paginator = $objPaginator;
-			$this->dtgCourier->ItemsPerPage = 10;
+			$this->dtgCourier->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
 			
 			$this->dtgCourier->AddColumn(new QDataGridColumn('Courier', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::Courier()->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Courier()->ShortDescription, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
 			$this->dtgCourier->AddColumn(new QDataGridColumn('Enabled', '<?= $_ITEM->__toStringActiveFlag() ?>', array('OrderByClause' => QQ::OrderBy(QQN::Courier()->ActiveFlag), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Courier()->ActiveFlag, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));

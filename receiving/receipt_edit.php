@@ -879,6 +879,7 @@ class ReceiptEditForm extends ReceiptEditFormBase {
 		$objPaginator = new QPaginator ( $this->dtgAssetTransact );
 		$this->dtgAssetTransact->Paginator = $objPaginator;
 		$this->dtgAssetTransact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+		$this->dtgAssetTransact->PaginatorAlternate = new QPaginator($this->dtgAssetTransact);
 		
 		$this->dtgAssetTransact->AddColumn ( new QDataGridColumn ( 'Asset Tag', '<?= $_ITEM->Asset->__toStringWithLink("bluelink") ?>', array (
 				'OrderByClause' => QQ::OrderBy ( QQN::AssetTransaction ()->Asset->AssetCode ),
@@ -1054,6 +1055,7 @@ class ReceiptEditForm extends ReceiptEditFormBase {
 		$objPaginator = new QPaginator ( $this->dtgInventoryTransact );
 		$this->dtgInventoryTransact->Paginator = $objPaginator;
 		$this->dtgInventoryTransact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+		$this->dtgInventoryTransact->PaginatorAlternate = new QPaginator($this->dtgInventoryTransact);
 		
 		$this->dtgInventoryTransact->AddColumn ( new QDataGridColumn ( 'Inventory Code', '<?= $_ITEM->InventoryLocation->InventoryModel->__toStringWithLink("bluelink") ?>', array (
 				'OrderByClause' => QQ::OrderBy ( QQN::InventoryTransaction ()->InventoryLocation->InventoryModel->InventoryModelCode ),

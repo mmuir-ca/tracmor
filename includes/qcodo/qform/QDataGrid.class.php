@@ -9,6 +9,7 @@
 		protected $blnShowColumnToggle = false;
 		protected $blnShowExportCsv = false;
 		protected $blnExportCsv = false;
+		protected $blnShowFooter = true;
 		protected $objColumnToggle;
 		protected $pnlColumnToggleButton;
 		protected $lblColumnToggleButton;
@@ -38,6 +39,11 @@
 			// cannot check blnShowColumnToggle because it is set after the datagrid is created
 			// This is a big hurdle in order to get this included in the Qcodo core
 			$this->objColumnToggle = new QDataGridColumnToggle($this);
+		}
+		
+		protected function GetFooterRowHtml() {
+			if ($this->objPaginatorAlternate)
+				return sprintf('<tr><td colspan="%s">%s</td></tr>', count($this->objColumnArray), $this->GetPaginatorRowHtml($this->objPaginatorAlternate));
 		}
 		
 		protected function GetHeaderRowHtml() {

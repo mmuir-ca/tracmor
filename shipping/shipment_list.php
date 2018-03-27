@@ -316,6 +316,7 @@
       $objPaginator = new QPaginator($this->dtgShipment);
       $this->dtgShipment->Paginator = $objPaginator;
       $this->dtgShipment->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+      $this->dtgShipment->PaginatorAlternate = new QPaginator($this->dtgShipment);
 
 	  /*$this->dtgShipment->AddColumn(new QDataGridColumnExt('<?= $_CONTROL->chkSelectAll_Render() ?>', '<?=$_CONTROL->chkSelected_Render($_ITEM->ShipmentId) ?>', 'CssClass="dtg_column"', 'HtmlEntities=false'));*/
       $this->dtgShipment->AddColumn(new QDataGridColumnExt('<img src=../images/icons/attachment_gray.gif border=0 title=Attachments alt=Attachments>', '<?= Attachment::toStringIcon($_ITEM->GetVirtualAttribute(\'attachment_count\')); ?>', 'SortByCommand="__attachment_count ASC"', 'ReverseSortByCommand="__attachment_count DESC"', 'CssClass="dtg_column"', 'HtmlEntities="false"'));

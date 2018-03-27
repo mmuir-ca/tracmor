@@ -817,15 +817,17 @@
 
             $this->lblImportResults->Display = true;
             if (count($this->objUpdatedItemArray)) {
-              $this->lblImportUpdatedItems->Display = true;
-              $this->dtgUpdatedItems->Paginator = new QPaginator($this->dtgUpdatedItems);
-              $this->dtgUpdatedItems->ItemsPerPage = 20;
+            	$this->lblImportUpdatedItems->Display = true;
+            	$this->dtgUpdatedItems->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+            	$this->dtgUpdatedItems->Paginator = new QPaginator($this->dtgUpdatedItems);
+            	$this->dtgUpdatedItems->PaginatorAlternate = new QPaginator($this->dtgUpdatedItems);
 
             }
             if (count($this->objNewCategoryArray)) {
-              $this->lblImportCategories->Display = true;
-              $this->dtgCategory->Paginator = new QPaginator($this->dtgCategory);
-              $this->dtgCategory->ItemsPerPage = 20;
+            	$this->lblImportCategories->Display = true;
+            	$this->dtgCategory->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+            	$this->dtgCategory->Paginator = new QPaginator($this->dtgCategory);
+            	$this->dtgCategory->PaginatorAlternate = new QPaginator($this->dtgCategory);
             }
             $this->btnNext->Display = false;
             $this->btnCancel->Display = false;

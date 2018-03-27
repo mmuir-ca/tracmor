@@ -104,7 +104,7 @@
 			// Enable Pagination, and set to 20 items per page
 			$objPaginator = new QPaginator($this->dtgDepreciationClass);
 			$this->dtgDepreciationClass->Paginator = $objPaginator;
-			$this->dtgDepreciationClass->ItemsPerPage = 20;
+			$this->dtgDepreciationClass->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
 
 			$this->dtgDepreciationClass->AddColumn(new QDatagridColumn('Depreciation Class', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::DepreciationClass()->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::DepreciationClass()->ShortDescription, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
 			$this->dtgDepreciationClass->AddColumn(new QDatagridColumn('Method', '<?= DepreciationMethodQtype::ToString($_ITEM->DepreciationMethodQtypeId) ?>', array('OrderByClause' => QQ::OrderBy(QQN::DepreciationClass()->DepreciationMethodQtypeId), 'ReverseOrderByClause' => QQ::OrderBy(QQN::DepreciationClass()->DepreciationMethodQtypeId, false), 'CssClass' => "dtg_column")));
