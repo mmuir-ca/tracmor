@@ -106,6 +106,7 @@
       $objPaginator = new QPaginator($this->dtgUserAccount);
       $this->dtgUserAccount->Paginator = $objPaginator;
       $this->dtgUserAccount->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+      $this->dtgUserAccount->PaginatorAlternate = new QPaginator($this->dtgUserAccount);
           
       $this->dtgUserAccount->AddColumn(new QDataGridColumn('Username', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::UserAccount()->Username), 'ReverseOrderByClause' => QQ::OrderBy(QQN::UserAccount()->Username, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
       $this->dtgUserAccount->AddColumn(new QDataGridColumn('Name', '<?= $_ITEM->FirstName ?> <?= $_ITEM->LastName ?>', array('OrderByClause' => QQ::OrderBy(QQN::UserAccount()->LastName, false, QQN::UserAccount()->FirstName, false), 'ReverseOrderByClause' => QQ::OrderBy(QQN::UserAccount()->LastName, QQN::UserAccount()->FirstName), 'CssClass' => "dtg_column")));

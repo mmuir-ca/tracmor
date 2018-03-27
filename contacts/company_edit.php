@@ -573,7 +573,8 @@ class CompanyEditForm extends CompanyEditFormBase {
 		// Enable Pagination, and set to 20 items per page
 		$objPaginator = new QPaginator($this->dtgContact);
 		$this->dtgContact->Paginator = $objPaginator;
-		$this->dtgContact->ItemsPerPage = 10;
+		$this->dtgContact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+		$this->dtgContact->PaginatorAlternate = new QPaginator($this->dtgContact);
 
 		$this->dtgContact->AddColumn(new QDataGridColumn('Name', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::Contact()->LastName), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Contact()->LastName, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
 		$this->dtgContact->AddColumn(new QDataGridColumn('Title', '<?= $_ITEM->Title ?>', array('OrderByClause' => QQ::OrderBy(QQN::Contact()->Title), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Contact()->Title, false), 'Width' => "200", 'CssClass' => "dtg_column")));
@@ -609,7 +610,8 @@ class CompanyEditForm extends CompanyEditFormBase {
 		// Enable Pagination, and set to 20 items per page
 		$objPaginator = new QPaginator($this->dtgAddress);
 		$this->dtgAddress->Paginator = $objPaginator;
-		$this->dtgAddress->ItemsPerPage = 10;
+		$this->dtgAddress->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+		$this->dtgAddress->PaginatorAlternate = new QPaginator($this->dtgAddress);
 
 		$this->dtgAddress->AddColumn(new QDataGridColumn('Name', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::Address()->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Address()->ShortDescription, false), 'HtmlEntities' => false, 'CssClass' => "dtg_column")));
 		$this->dtgAddress->AddColumn(new QDataGridColumn('Address', '<?= $_ITEM->__toStringFullAddress() ?>', array('Width' => "200", 'CssClass' => "dtg_column", 'HtmlEntities' => false)));

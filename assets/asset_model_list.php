@@ -108,6 +108,7 @@
 			$objPaginator = new QPaginator($this->dtgAssetModel);
 			$this->dtgAssetModel->Paginator = $objPaginator;
 			$this->dtgAssetModel->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+			$this->dtgAssetModel->PaginatorAlternate = new QPaginator($this->dtgAssetModel);
 
 			// Add column with checkBoxes to perform MassActions
 			$blnShowCheckboxes = QApplication::AuthorizeEntityTypeBoolean(2);

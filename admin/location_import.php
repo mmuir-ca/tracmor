@@ -803,6 +803,7 @@
               $this->lblImportUpdatedItems->Display = true;
               $this->dtgUpdatedItems->Paginator = new QPaginator($this->dtgUpdatedItems);
               $this->dtgUpdatedItems->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgUpdatedItems->PaginatorAlternate = new QPaginator($this->dtgUpdatedItems);
 
             }
 
@@ -810,6 +811,7 @@
               $this->lblImportLocations->Display = true;
               $this->dtgLocation->Paginator = new QPaginator($this->dtgLocation);
               $this->dtgLocation->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgLocation->PaginatorAlternate = new QPaginator($this->dtgLocation);
             }
             $this->btnNext->Display = false;
             $this->btnCancel->Display = false;

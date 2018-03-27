@@ -836,6 +836,7 @@
               $this->lblImportUpdatedItems->Display = true;
               $this->dtgUpdatedItems->Paginator = new QPaginator($this->dtgUpdatedItems);
               $this->dtgUpdatedItems->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgUpdatedItems->PaginatorAlternate = new QPaginator($this->dtgUpdatedItems);
 
             }
 
@@ -843,11 +844,13 @@
               $this->lblImportManufacturers->Display = true;
               $this->dtgManufacturer->Paginator = new QPaginator($this->dtgManufacturer);
               $this->dtgManufacturer->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgManufacturer->PaginatorAlternate = new QPaginator($this->dtgManufacturer);
             }
             /*if (count($this->objNewLocationArray)) {
               $this->lblImportLocations->Display = true;
               $this->dtgLocation->Paginator = new QPaginator($this->dtgLocation);
               $this->dtgLocation->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgLocation->PaginatorAlternate = new QPaginator($this->dtgLocation);
             }*/
             $this->btnNext->Display = false;
             $this->btnCancel->Display = false;

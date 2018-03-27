@@ -104,6 +104,7 @@
       $objPaginator = new QPaginator($this->dtgRole);
       $this->dtgRole->Paginator = $objPaginator;
       $this->dtgRole->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+      $this->dtgRole->PaginatorAlternate = new QPaginator($this->dtgRole);
           
       $this->dtgRole->AddColumn(new QDataGridColumn('Role', '<?= $_ITEM->__toStringWithLink("bluelink") ?>', array('OrderByClause' => QQ::OrderBy(QQN::Role()->ShortDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Role()->ShortDescription, false), 'CssClass' => "dtg_column", 'HtmlEntities' => false)));
       $this->dtgRole->AddColumn(new QDataGridColumn('Description', '<?= $_ITEM->LongDescription ?>', array('Width' => "200", 'OrderByClause' => QQ::OrderBy(QQN::Role()->LongDescription), 'ReverseOrderByClause' => QQ::OrderBy(QQN::Role()->LongDescription, false), 'CssClass' => "dtg_column")));

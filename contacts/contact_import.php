@@ -1027,13 +1027,15 @@
             if (count($this->objUpdatedItemArray)) {
               $this->lblImportUpdatedItems->Display = true;
               $this->dtgUpdatedItems->Paginator = new QPaginator($this->dtgUpdatedItems);
-              $this->dtgUpdatedItems->ItemsPerPage = 20;
+              $this->dtgUpdatedItems->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgUpdatedItems->PaginatorAlternate = new QPaginator($this->dtgUpdatedItems);
 
             }
             if (count($this->objNewContactArray)) {
               $this->lblImportContacts->Display = true;
               $this->dtgContact->Paginator = new QPaginator($this->dtgContact);
-              $this->dtgContact->ItemsPerPage = 20;
+              $this->dtgContact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgContact->PaginatorAlternate = new QPaginator($this->dtgContact);
             }
             $this->btnNext->Display = false;
             $this->btnCancel->Display = false;

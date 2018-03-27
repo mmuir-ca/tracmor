@@ -258,6 +258,7 @@
 			$objPaginator = new QPaginator($this->dtgCompany);
 			$this->dtgCompany->Paginator = $objPaginator;
 			$this->dtgCompany->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+			$this->dtgCompany->PaginatorAlternate = new QPaginator($this->dtgCompany);
 
 			// Add Checkbox Column
 			/*$this->dtgCompany->AddColumn(new QDataGridColumnExt('<?= $_CONTROL->chkSelectAll_Render() ?>', '<?=$_CONTROL->chkSelected_Render($_ITEM->CompanyId) ?>', 'CssClass="dtg_column"', 'HtmlEntities=false'));*/

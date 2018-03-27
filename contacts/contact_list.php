@@ -317,6 +317,7 @@
 			$objPaginator = new QPaginator($this->dtgContact);
 			$this->dtgContact->Paginator = $objPaginator;
 			$this->dtgContact->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+			$this->dtgContact->PaginatorAlternate = new QPaginator($this->dtgContact);
 			// Add Check boxes
 			/*$this->dtgContact->AddColumn(new QDataGridColumnExt('<?= $_CONTROL->chkSelectAll_Render() ?>', '<?=$_CONTROL->chkSelected_Render($_ITEM->ContactId) ?>', 'CssClass="dtg_column"', 'HtmlEntities=false'));*/
 

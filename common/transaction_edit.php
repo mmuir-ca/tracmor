@@ -125,7 +125,8 @@
 			// Enable Pagination, and set to 20 items per page
 			$objPaginator = new QPaginator($this->dtgEntity);
 			$this->dtgEntity->Paginator = $objPaginator;
-			$this->dtgEntity->ItemsPerPage = 10;
+			$this->dtgEntity->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+			$this->dtgEntity->PaginatorAlternate = new QPaginator($this->dtgEntity);
 
 			// These datagrids are not sortable because they would need early expansion
 			// Sorting is possible to implement but not worth the time right now

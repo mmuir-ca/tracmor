@@ -187,7 +187,8 @@
 			// Enable Pagination, and set to 20 items per page
 			$objPaginator = new QPaginator($this->dtgChildAssets);
 			$this->dtgChildAssets->Paginator = $objPaginator;
-			$this->dtgChildAssets->ItemsPerPage = 20;
+			$this->dtgChildAssets->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+			$this->dtgChildAssets->PaginatorAlternate = new QPaginator($this->dtgChildAssets);
 
 			$this->dtgChildAssets->AddColumn(new QDataGridColumnExt('<?=$_CONTROL->chkSelectAll_Render() ?>', '<?=$_CONTROL->chkSelected_Render($_ITEM->AssetId) ?>', 'CssClass="dtg_column"', 'HtmlEntities=false', 'Width=15px', 'Display=false'));
 			$this->dtgChildAssets->AddColumn(new QDataGridColumn('&nbsp;', '<?= $_FORM->DisplayLockedImage($_ITEM->LinkedFlag) ?>', array('CssClass' => "dtg_column", 'Width' => "15px", 'HtmlEntities' => false)));
@@ -232,6 +233,7 @@
 			$this->dtrAssetHistory = new QDataRepeater($this);
 			$this->dtrAssetHistory->Paginator = new QPaginator($this);
 			$this->dtrAssetHistory->ItemsPerPage = 10;
+			$this->dtrAssetHistory->PaginatorAlternate = new QPaginator($this);
 			$this->dtrAssetHistory->UseAjax = true;
 			$this->dtrAssetHistory->Template = 'dtr_asset_history.tpl.php';
 			$this->dtrAssetHistory->SetDataBinder('dtrAssetHistory_Bind');

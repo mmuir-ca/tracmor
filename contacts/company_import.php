@@ -958,13 +958,15 @@
             if (count($this->objUpdatedItemArray)) {
               $this->lblImportUpdatedItems->Display = true;
               $this->dtgUpdatedItems->Paginator = new QPaginator($this->dtgUpdatedItems);
-              $this->dtgUpdatedItems->ItemsPerPage = 20;
+              $this->dtgUpdatedItems->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgUpdatedItems->PaginatorAlternate = new QPaginator($this->dtgUpdatedItems);
 
             }
             if (count($this->objNewCompanyArray)) {
               $this->lblImportCompanies->Display = true;
               $this->dtgCompany->Paginator = new QPaginator($this->dtgCompany);
-              $this->dtgCompany->ItemsPerPage = 20;
+              $this->dtgCompany->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+              $this->dtgCompany->PaginatorAlternate = new QPaginator($this->dtgCompany);
             }
             $this->btnNext->Display = false;
             $this->btnCancel->Display = false;

@@ -1143,17 +1143,20 @@
 						if (count($this->objNewAssetArray)) {
 							//$this->lblImportAssets->Display = true;
 							$this->dtgAsset->Paginator = new QPaginator($this->dtgAsset);
-							$this->dtgAsset->ItemsPerPage = 20;
+							$this->dtgAsset->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+							$this->dtgAsset->PaginatorAlternate = new QPaginator($this->dtgAsset);
 						}
 						if (count($this->objUpdatedAssetArray)) {
 							$this->lblImportUpdatedAssets->Display = true;
 							$this->dtgUpdatedAsset->Paginator = new QPaginator($this->dtgUpdatedAsset);
-							$this->dtgUpdatedAsset->ItemsPerPage = 20;
+							$this->dtgUpdatedAsset->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+							$this->dtgUpdatedAsset->PaginatorAlternate = new QPaginator($this->dtgUpdatedAsset);
 						}
 						if (count($this->objNewAssetArray)) {
 							$this->lblImportAsset->Display = true;
 							$this->dtgAsset->Paginator = new QPaginator($this->dtgAsset);
-							$this->dtgAsset->ItemsPerPage = 20;
+							$this->dtgAsset->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
+							$this->dtgAsset->PaginatorAlternate = new QPaginator($this->dtgAsset);
 						}
 						$this->btnNext->Display = false;
 						$this->btnCancel->Display = false;
