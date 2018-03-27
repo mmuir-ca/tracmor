@@ -70,6 +70,7 @@
 			// Datagrid Paginator
 			$this->dtgAsset->Paginator = new QPaginator($this->dtgAsset);
 			$this->dtgAsset->ItemsPerPage = 10;
+			$this->dtgAsset->PaginatorAlternate = new QPaginator($this->dtgAsset);
 
 			// Specify Whether or Not to Refresh using Ajax
 			$this->dtgAsset->UseAjax = false;

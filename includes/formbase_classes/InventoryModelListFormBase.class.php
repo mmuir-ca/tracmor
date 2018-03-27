@@ -66,6 +66,7 @@
 			// Datagrid Paginator
 			$this->dtgInventoryModel->Paginator = new QPaginator($this->dtgInventoryModel);
 			$this->dtgInventoryModel->ItemsPerPage = 10;
+			$this->dtgInventoryModel->PaginatorAlternate = new QPaginator($this->dtgInventoryModel);
 
 			// Specify Whether or Not to Refresh using Ajax
 			$this->dtgInventoryModel->UseAjax = false;
