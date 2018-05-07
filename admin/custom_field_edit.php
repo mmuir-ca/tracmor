@@ -444,7 +444,7 @@
       $objPaginator = new QPaginator($this->dtgAssetModels);
       $this->dtgAssetModels->Paginator = $objPaginator;
       $this->dtgAssetModels->ItemsPerPage = QApplication::$TracmorSettings->SearchResultsPerPage;
-      $this->dtgCustomField->PaginatorAlternate = new QPaginator($this->dtgCustomField);
+      $this->dtgAssetModels->PaginatorAlternate = new QPaginator($this->dtgAssetModels);
 
       $this->dtgAssetModels->AddColumn(new QDataGridColumn('Model', '<?= $_ITEM->AssetModel->__toStringWithLink($_ITEM,"bluelink"); ?>', array('CssClass' => "dtg_column" , 'HtmlEntities'=>false)));
       $this->dtgAssetModels->AddColumn(new QDataGridColumn('Action', '<?= $_FORM->RemoveAssetModelsColumn_Render($_ITEM) ?>', array('CssClass' => "dtg_column", 'HtmlEntities' => false)));
